@@ -1,17 +1,12 @@
-
-// 部署完成后在网址后面加上这个，获取订阅器默认节点，/auto
-
-let mytoken= 'auto';//快速订阅访问入口, 留空则不启动快速订阅
-
-// 设置优选地址，不带端口号默认443，不支持非TLS订阅生成
+let mytoken= '';//快速订阅访问入口, 留空则不启动快速订阅
+// 设置优选地址，不带端口号默认8443，不支持非TLS订阅生成
 let addresses = [
-	'icook.tw:2053#优选域名',
-	'cloudflare.cfgo.cc#优选官方线路',
+
 ];
 
 // 设置优选地址api接口
 let addressesapi = [
-	'https://raw.githubusercontent.com/cmliu/WorkerVless2sub/main/addressesapi.txt' //可参考内容格式 自行搭建。
+
 ];
 
 let DLS = 4;//速度下限
@@ -19,19 +14,20 @@ let addressescsv = [
 	//'https://raw.githubusercontent.com/cmliu/WorkerVless2sub/main/addressescsv.csv' //iptest测速结果文件。
 ];
 
-let subconverter = "api.v1.mk"; //在线订阅转换后端，目前使用肥羊的订阅转换功能。支持自建psub 可自行搭建https://github.com/bulianglin/psub
-let subconfig = "https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/config/ACL4SSR_Online_Full_MultiMode.ini"; //订阅配置文件
+let subconverter = 'api.v1.mk';//在线订阅转换后端，目前使用肥羊的订阅转换功能。支持自建psub 可自行搭建https://github.com/bulianglin/psub
+let subconfig = "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_MultiMode.ini"; //订阅配置文件
 
 let link = '';
 let edgetunnel = 'ed';
 let RproxyIP = 'false';
 let proxyIPs = [
-	'proxyip.aliyun.fxxk.dedyn.io',
-	'proxyip.multacom.fxxk.dedyn.io',
-	'proxyip.vultr.fxxk.dedyn.io',
+	'cdn.xn--b6gac.eu.org',
+	'cdn-all.xn--b6gac.eu.org',
+	'edgetunnel.anycast.eu.org',
 ];
 let CMproxyIPs = [
-	{ proxyIP: "proxyip.fxxk.dedyn.io", type: "HK" },
+	//{ proxyIP: "proxyip.fxxk.dedyn.io", type: "US" },
+	//{ proxyIP: "proxyip.sg.fxxk.dedyn.io", type: "SG" },
 ];
 let BotToken ='';
 let ChatID =''; 
@@ -39,7 +35,7 @@ let proxyhosts = [//本地代理域名池
 	//'ppfv2tl9veojd-maillazy.pages.dev',
 ];
 let proxyhostsURL = 'https://raw.githubusercontent.com/cmliu/CFcdnVmess2sub/main/proxyhosts';//在线代理域名池URL
-let EndPS = '';//节点名备注内容
+let EndPS = '';
 
 async function sendMessage(type, ip, add_data = "") {
 	if ( BotToken !== '' && ChatID !== ''){
@@ -71,8 +67,9 @@ async function getAddressesapi() {
 	
 	let newAddressesapi = [];
 	
-	for (const apiUrl of addressesapi) {
+	for (let apiUrl of addressesapi) {
 		try {
+			
 			const response = await fetch(apiUrl);
 		
 			if (!response.ok) {
@@ -82,20 +79,37 @@ async function getAddressesapi() {
 		
 			const text = await response.text();
 			const lines = text.split('\n');
-			const regex = /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d+)?(#.*)?$/;
-		
+			//const regex = /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d+)?(#.*)?$/;
+			//IP 地址为必需部分，格式为 199.19.111.14
+			//端口号和名称是可选部分：
+			//端口号格式为 数字，并且以：或，开头
+			//名称格式为 任意字，并且以#或，开头
+			const regex = /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(?::|,)?(\d+)?(?:#|,)?([^,#]*)?$/;
 			const apiAddresses = lines.map(line => {
 				const match = line.match(regex);
 				return match ? match[0] : null;
 			}).filter(Boolean);
 		
 			newAddressesapi = newAddressesapi.concat(apiAddresses);
+			
 		} catch (error) {
 			console.error('获取地址时出错:', error);
 			continue;
 		}
 	}
-	
+	// 判断数组 newAddressesapi 的长度是否大于 40
+	// if (newAddressesapi.length > 50) {
+	// 	// 随机取其中的 40 个值
+	// 	const randomItems = [];
+	// 	while (randomItems.length < 50) {
+	// 		const randomIndex = Math.floor(Math.random() * newAddressesapi.length);
+	// 		if (!randomItems.includes(newAddressesapi[randomIndex])) {
+	// 			randomItems.push(newAddressesapi[randomIndex]);
+	// 		}
+	// 	}
+
+	// 	newAddressesapi = randomItems;
+	// }
 	return newAddressesapi;
 }
 
@@ -151,35 +165,53 @@ async function getAddressescsv() {
 			continue;
 		}
 	}
-	
+	// 判断数组 newAddressesapi 的长度是否大于 40
+	if (newAddressescsv.length > 40) {
+		// 随机取其中的 40 个值
+		const randomItems = [];
+		while (randomItems.length < 40) {
+			const randomIndex = Math.floor(Math.random() * newAddressescsv.length);
+			if (!randomItems.includes(newAddressescsv[randomIndex])) {
+				randomItems.push(newAddressescsv[randomIndex]);
+			}
+		}
+
+		newAddressescsv = randomItems;
+	}
 	return newAddressescsv;
 }
 
 let protocol;
 export default {
+	/**
+	 *
+	 * @param {{ADDRESSES: string, ADDRESSESAPI: string, ADDRESSESCSV: string, SUBCONVERTER: string,
+	 * CFWORKERHOST: string,CFPAGEHOST: string,BESTCFIP: string,BESTPROXYIP: string, CFIP: string,PROXYIP: string}} env
+	 * @returns {Promise<Response>}
+	 */
 	async fetch (request, env) {
-		mytoken = env.TOKEN || mytoken;
-		BotToken = env.TGTOKEN || BotToken;
-		ChatID = env.TGID || ChatID; 
-		subconverter = env.SUBAPI || subconverter;
-		subconfig = env.SUBCONFIG || subconfig;
 		const userAgentHeader = request.headers.get('User-Agent');
 		const userAgent = userAgentHeader ? userAgentHeader.toLowerCase() : "null";
 		const url = new URL(request.url);
-		const format = url.searchParams.get('format') ? url.searchParams.get('format').toLowerCase() : "null";
 		let host = "";
 		let uuid = "";
 		let path = "";
+		mytoken = env.TOKEN || mytoken;
+		addresses = env.ADDRESSES ? env.ADDRESSES.split(",") : addresses;
+		addressesapi = env.ADDRESSESAPI ? env.ADDRESSESAPI.split(",") : addressesapi;
+		addressescsv = env.ADDRESSESCSV ? env.ADDRESSESCSV.split(",") : addressescsv;
+		subconverter = env.SUBCONVERTER || subconverter;
+		let cfworkerhost = env.CFWORKERHOST || 'test.workers.dev';
+		let cfpagehost = env.CFPAGEHOST || 'test.pages.dev';
 
 		if (mytoken !== '' && url.pathname.includes(mytoken)) {
-			host = env.HOST || "edgetunnel-2z2.pages.dev";
-			uuid = env.UUID || "30e9c5c8-ed28-4cd9-b008-dc67277f8b02";
-			path = env.PATH || "/?ed=2048";
-			edgetunnel = env.ED || edgetunnel;
-			RproxyIP = env.RPROXYIP || RproxyIP;
-
-			const hasSos = url.searchParams.has('sos');
-			if (hasSos) {
+			host = "edgetunnel-2z2.pages.dev";
+			uuid = "30e9c5c8-ed28-4cd9-b008-dc67277f8b02";
+			path = "/?ed=2048";
+			//edgetunnel = 'cmliu';
+			//RproxyIP = 'true';
+			
+			if (url.pathname.includes("/sos")) {
 				const hy2Url = "https://hy2sub.pages.dev";
 				try {
 					const subconverterResponse = await fetch(hy2Url);
@@ -254,10 +286,165 @@ export default {
 				path = (path[0] === '/') ? path : '/' + path;
 			}
 		}
+		
+		//bestproxy节点生成
+		if(url.searchParams.get('host') && (url.searchParams.get('host').includes(cfworkerhost))) {
+			//优选域名
+			let bestcfip = env.BESTCFIP || 'bestcf.org';
+			let bestproxyip = env.BESTPROXYIP || 'bestproxy.org';
+			//优选ip
+			let cfip = env.CFIP || 'bestcf.org';
+			let proxyip = env.PROXYIP || 'bestproxy.org';
+			let ntlsports = ["80","8080","8880","2052","2086","2095","2082"];
+			let tlsports = ["2096","2087","2083","443","8443","2053"];
+			const vlessLinks = [];
 
+			if(url.searchParams.get('client') && (url.searchParams.get('client').includes('ip'))){
+				//cfip赋值给8443端口的https，proxyip赋值给80端口的http
+				let cfAddressesapi = [];
+				let proxyAddressesapi = [];
+				//获取ip地址文本
+				try {
+					const cfresponse = await fetch(cfip);
+					const proxyresponse = await fetch(proxyip);
+				
+					if (!cfresponse.ok) {
+						console.error('获取地址时出错:', cfresponse.status, cfresponse.statusText);
+						//continue;
+					}
+					if (!proxyresponse.ok) {
+						console.error('获取地址时出错:', proxyresponse.status, proxyresponse.statusText);
+						//continue;
+					}
+				
+					const cftext = await cfresponse.text();
+					const proxytext = await proxyresponse.text();
+					const cflines = cftext.split('\n');
+					const proxylines = proxytext.split('\n');
+					//要求ip库为纯ip
+					const regex = /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/;
+					const cfAddresses = cflines.map(line => {
+						const match = line.match(regex);
+						return match ? match[0] : null;
+					}).filter(Boolean);
+					const proxyAddresses = proxylines.map(line => {
+						const match = line.match(regex);
+						return match ? match[0] : null;
+					}).filter(Boolean);
+					cfAddressesapi = cfAddressesapi.concat(cfAddresses)
+					proxyAddressesapi = proxyAddressesapi.concat(proxyAddresses)
+					
+				} catch (error) {
+					console.error('获取地址时出错:', error);
+					return new Response(`Error: ${error.message}`, {
+						status: 500,
+						headers: { 'content-type': 'text/plain; charset=utf-8' },
+					})
+				}
+				//合成vless链接，要求ip库为纯ip未过滤
+				for (let i = 0; i < proxyAddressesapi.length; i++) {
+					const ip = proxyAddressesapi[i];
+					const vlessLink = `vless://${uuid}@${ip}:80?encryption=none&security=none&fp=random&type=ws&host=${host}&path=/=2048#CFW-${ip}`;
+					vlessLinks.push(vlessLink);
+				}
+
+				// 合成HTTPS的vless链接
+				for (let i = 0; i < proxyAddressesapi.length; i++) {
+					const ip = proxyAddressesapi[i];
+					const vlessLink = `vless://${uuid}@${ip}:8443?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=/?ed=2048#CFWS-${ip}`;
+					vlessLinks.push(vlessLink);
+				}
+				
+				if (cfAddressesapi.length > 0) {
+					const ip = cfAddressesapi[0];
+					const vlessLink = `vless://${uuid}@${ip}:8443?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=/?ed=2048#CF-${ip}`;
+					vlessLinks.push(vlessLink);
+				}
+
+			} else {
+				// Generate vlessLinks for ntlsports
+				for (let i = 0; i < ntlsports.length; i++) {
+					const port = ntlsports[i];
+					const ip = i >= ntlsports.length - 3 ? bestcfip : bestproxyip;
+					const vlessLink = `vless://${uuid}@${ip}:${port}?encryption=none&security=none&fp=random&type=ws&host=${host}&path=/=2048#CFWorker-${port}`;
+
+					vlessLinks.push(vlessLink);
+				}
+
+				// Generate vlessLinks for tlsports
+				for (let i = 0; i < tlsports.length; i++) {
+					const port = tlsports[i];
+					const ip = i >= tlsports.length - 3 ? bestcfip : bestproxyip;
+					const vlessLink = `vless://${uuid}@${ip}:${port}?encryption=none&security=tls&sni=${host}&fp=random&type=ws&host=${host}&path=/?ed=2048#CFWorker-${port}`;;
+					vlessLinks.push(vlessLink);
+				}
+			}
+
+			// Join all vlessLinks with newline separator
+			if (userAgent.includes('telegram') || userAgent.includes('twitter') || userAgent.includes('miaoko')) {
+				return new Response('Hello World!');
+			} else if (userAgent.includes('clash') || (url.searchParams.get('client') && (url.searchParams.get('client').includes('clash')))) {
+				//console.log(encodeURIComponent(responseBody));
+				const responseBody = vlessLinks.join('|');
+				const subconverterUrl = `https://${subconverter}/sub?target=clash&url=${encodeURIComponent(responseBody)}&insert=false&config=${encodeURIComponent(subconfig)}&emoji=true&list=false&tfo=false&scv=false&fdn=false&sort=false&new_name=true`;
+				//console.log(subconverterUrl);
+
+			try {
+				const subconverterResponse = await fetch(subconverterUrl);
+				
+				if (!subconverterResponse.ok) {
+					throw new Error(`Error fetching subconverterUrl: ${subconverterResponse.status} ${subconverterResponse.statusText}`);
+				}
+				
+				const subconverterContent = await subconverterResponse.text();
+				
+				return new Response(subconverterContent, {
+					headers: { 'content-type': 'text/plain; charset=utf-8' },
+				});
+			} catch (error) {
+				return new Response(`Error: ${error.message}`, {
+					status: 500,
+					headers: { 'content-type': 'text/plain; charset=utf-8' },
+				});
+				}
+			} else if (userAgent.includes('sing-box') || userAgent.includes('singbox') || (url.searchParams.get('client') && (url.searchParams.get('client').includes('sing-box')))){
+				const responseBody = vlessLinks.join('|');
+				const subconverterUrl = `https://${subconverter}/sub?target=singbox&url=${encodeURIComponent(responseBody)}&insert=false&config=${encodeURIComponent(subconfig)}&emoji=true&list=false&tfo=false&scv=false&fdn=false&sort=false&new_name=true`;
+
+				try {
+				const subconverterResponse = await fetch(subconverterUrl);
+				
+					if (!subconverterResponse.ok) {
+						throw new Error(`Error fetching subconverterUrl: ${subconverterResponse.status} ${subconverterResponse.statusText}`);
+					}
+					
+					const subconverterContent = await subconverterResponse.text();
+					
+					return new Response(subconverterContent, {
+						headers: { 'content-type': 'text/plain; charset=utf-8' },
+					});
+				} catch (error) {
+					return new Response(`Error: ${error.message}`, {
+						status: 500,
+						headers: { 'content-type': 'text/plain; charset=utf-8' },
+					});
+				}
+			} else {
+				const responseBody = vlessLinks.join('\n');
+				const combinedContent = responseBody + '\n' + link; // 合并内容
+				const base64Response = btoa(combinedContent); // 重新进行 Base64 编码
+
+				const response = new Response(base64Response, {
+				headers: { 'content-type': 'text/plain' },
+				});
+
+				return response;
+			}
+		}
+				
 		if (userAgent.includes('telegram') || userAgent.includes('twitter') || userAgent.includes('miaoko')) {
 			return new Response('Hello World!');
-		} else if (userAgent.includes('clash') || (format === 'clash' && !userAgent.includes('subconverter'))) {
+		} else if (userAgent.includes('clash')) {
 			const subconverterUrl = `https://${subconverter}/sub?target=clash&url=${encodeURIComponent(request.url)}&insert=false&config=${encodeURIComponent(subconfig)}&emoji=true&list=false&tfo=false&scv=false&fdn=false&sort=false&new_name=true`;
 
 			try {
@@ -278,7 +465,7 @@ export default {
 					headers: { 'content-type': 'text/plain; charset=utf-8' },
 				});
 			}
-		} else if (userAgent.includes('sing-box') || userAgent.includes('singbox') || (format === 'singbox' && !userAgent.includes('subconverter'))){
+		} else if (userAgent.includes('sing-box') || userAgent.includes('singbox')){
 			const subconverterUrl = `https://${subconverter}/sub?target=singbox&url=${encodeURIComponent(request.url)}&insert=false&config=${encodeURIComponent(subconfig)}&emoji=true&list=false&tfo=false&scv=false&fdn=false&sort=false&new_name=true`;
 
 			try {
@@ -300,7 +487,7 @@ export default {
 				});
 			}
 		} else {
-			if(host.includes('workers.dev') || host.includes('pages.dev')) {
+			if(url.searchParams.get('host') && (url.searchParams.get('host').includes('workers.dev') || url.searchParams.get('host').includes('pages.dev'))) {
 				if (proxyhostsURL) {
 					try {
 						const response = await fetch(proxyhostsURL); 
@@ -324,18 +511,25 @@ export default {
 				proxyhosts = [...new Set(proxyhosts)];
 			}
 			
-			const newAddressesapi = await getAddressesapi();
-			const newAddressescsv = await getAddressescsv();
-			addresses = addresses.concat(newAddressesapi);
-			addresses = addresses.concat(newAddressescsv);
+			const SUB_api = env.SUB_BUCKET ? await env.SUB_BUCKET.get('addressapi') : null;
+			if(SUB_api !== null) {
+				const newAddresses =  SUB_api;
+				addresses = addresses.concat(newAddresses.split('\n'));
+				//console.log(addresses);
+			} else {
+				const newAddressesapi = await getAddressesapi();
+				const newAddressescsv = await getAddressescsv();
+				addresses = addresses.concat(newAddressesapi);
+				addresses = addresses.concat(newAddressescsv);
+			}
 			
 			// 使用Set对象去重
 			const uniqueAddresses = [...new Set(addresses)];
 			
 			const responseBody = uniqueAddresses.map(address => {
-				let port = "443";
+				let port = "8443";
 				let addressid = address;
-			
+				//console.log(address);
 				if (address.includes(':') && address.includes('#')) {
 					const parts = address.split(':');
 					address = parts[0];
@@ -346,6 +540,18 @@ export default {
 					const parts = address.split(':');
 					address = parts[0];
 					port = parts[1];
+				} else if (address.includes(',')) {
+					const parts = address.split(',');
+					const spaces = parts.length;
+					if (spaces == 2){
+						address = parts[0];
+						port = parts[1];
+					}
+					else if(spaces >= 3){
+						address = parts[0];
+						port = parts[1];
+						addressid = parts[2];
+					}
 				} else if (address.includes('#')) {
 					const parts = address.split('#');
 					address = parts[0];
@@ -382,15 +588,14 @@ export default {
 					}
 				}
 				
-				let 伪装域名 = host ;
+				
 				let 最终路径 = path ;
-				let 节点备注 = EndPS ;
-				if(proxyhosts && (host.includes('workers.dev') || host.includes('pages.dev'))) {
-					最终路径 = `/${host}${path}`;
-					伪装域名 = proxyhosts[Math.floor(Math.random() * proxyhosts.length)];
-					节点备注 = `${EndPS} 已启用临时域名中转服务，请尽快绑定自定义域！`;
+				if(url.searchParams.get('host') && (url.searchParams.get('host').includes('workers.dev') || url.searchParams.get('host').includes('pages.dev'))) {
+					最终路径 = `/${url.searchParams.get('host')}${path}`;
+					host = proxyhosts[Math.floor(Math.random() * proxyhosts.length)];
+					EndPS = ' 已启用临时域名中转服务，请尽快绑定自定义域！';
 				}
-				const vlessLink = `vless://${uuid}@${address}:${port}?encryption=none&security=tls&sni=${伪装域名}&fp=random&type=ws&host=${伪装域名}&path=${encodeURIComponent(最终路径)}#${encodeURIComponent(addressid + 节点备注)}`;
+				const vlessLink = `vless://${uuid}@${address}:${port}?encryption=none&security=tls&sni=${host}&fp=random&type=ws&host=${host}&path=${encodeURIComponent(最终路径)}#${encodeURIComponent(addressid + EndPS)}`;
 			
 				return vlessLink;
 			}).join('\n');
