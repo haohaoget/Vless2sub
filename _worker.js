@@ -21,13 +21,12 @@ let link = '';
 let edgetunnel = 'ed';
 let RproxyIP = 'false';
 let proxyIPs = [
-	'cdn.xn--b6gac.eu.org',
-	'cdn-all.xn--b6gac.eu.org',
-	'edgetunnel.anycast.eu.org',
+	'proxyip.aliyun.fxxk.dedyn.io',
+	'proxyip.multacom.fxxk.dedyn.io',
+	'proxyip.vultr.fxxk.dedyn.io',
 ];
 let CMproxyIPs = [
-	//{ proxyIP: "proxyip.fxxk.dedyn.io", type: "US" },
-	//{ proxyIP: "proxyip.sg.fxxk.dedyn.io", type: "SG" },
+	{ proxyIP: "proxyip.fxxk.dedyn.io", type: "HK" },
 ];
 let BotToken ='';
 let ChatID =''; 
@@ -35,7 +34,7 @@ let proxyhosts = [//本地代理域名池
 	//'ppfv2tl9veojd-maillazy.pages.dev',
 ];
 let proxyhostsURL = 'https://raw.githubusercontent.com/cmliu/CFcdnVmess2sub/main/proxyhosts';//在线代理域名池URL
-let EndPS = '';
+let EndPS = '';//节点名备注内容
 
 async function sendMessage(type, ip, add_data = "") {
 	if ( BotToken !== '' && ChatID !== ''){
@@ -183,20 +182,20 @@ async function getAddressescsv() {
 
 let protocol;
 export default {
-	/**
-	 *
-	 * @param {{ADDRESSES: string, ADDRESSESAPI: string, ADDRESSESCSV: string, SUBCONVERTER: string,
-	 * CFWORKERHOST: string,CFPAGEHOST: string,BESTCFIP: string,BESTPROXYIP: string, CFIP: string,PROXYIP: string}} env
-	 * @returns {Promise<Response>}
-	 */
 	async fetch (request, env) {
+		mytoken = env.TOKEN || mytoken;
+		BotToken = env.TGTOKEN || BotToken;
+		ChatID = env.TGID || ChatID; 
+		subconverter = env.SUBAPI || subconverter;
+		subconfig = env.SUBCONFIG || subconfig;
 		const userAgentHeader = request.headers.get('User-Agent');
 		const userAgent = userAgentHeader ? userAgentHeader.toLowerCase() : "null";
 		const url = new URL(request.url);
+		const format = url.searchParams.get('format') ? url.searchParams.get('format').toLowerCase() : "null";
 		let host = "";
 		let uuid = "";
 		let path = "";
-		mytoken = env.TOKEN || mytoken;
+
 		addresses = env.ADDRESSES ? env.ADDRESSES.split(",") : addresses;
 		addressesapi = env.ADDRESSESAPI ? env.ADDRESSESAPI.split(",") : addressesapi;
 		addressescsv = env.ADDRESSESCSV ? env.ADDRESSESCSV.split(",") : addressescsv;
@@ -205,13 +204,14 @@ export default {
 		let cfpagehost = env.CFPAGEHOST || 'test.pages.dev';
 
 		if (mytoken !== '' && url.pathname.includes(mytoken)) {
-			host = "edgetunnel-2z2.pages.dev";
-			uuid = "30e9c5c8-ed28-4cd9-b008-dc67277f8b02";
-			path = "/?ed=2048";
-			//edgetunnel = 'cmliu';
-			//RproxyIP = 'true';
-			
-			if (url.pathname.includes("/sos")) {
+			host = env.HOST || "edgetunnel-2z2.pages.dev";
+			uuid = env.UUID || "30e9c5c8-ed28-4cd9-b008-dc67277f8b02";
+			path = env.PATH || "/?ed=2048";
+			edgetunnel = env.ED || edgetunnel;
+			RproxyIP = env.RPROXYIP || RproxyIP;
+
+			const hasSos = url.searchParams.has('sos');
+			if (hasSos) {
 				const hy2Url = "https://hy2sub.pages.dev";
 				try {
 					const subconverterResponse = await fetch(hy2Url);
@@ -383,7 +383,7 @@ export default {
 			// Join all vlessLinks with newline separator
 			if (userAgent.includes('telegram') || userAgent.includes('twitter') || userAgent.includes('miaoko')) {
 				return new Response('Hello World!');
-			} else if (userAgent.includes('clash') || (url.searchParams.get('client') && (url.searchParams.get('client').includes('clash')))) {
+			} else if (userAgent.includes('clash') || (format === 'clash' && !userAgent.includes('subconverter')) || (url.searchParams.get('client') && (url.searchParams.get('client').includes('clash')))) {
 				//console.log(encodeURIComponent(responseBody));
 				const responseBody = vlessLinks.join('|');
 				const subconverterUrl = `https://${subconverter}/sub?target=clash&url=${encodeURIComponent(responseBody)}&insert=false&config=${encodeURIComponent(subconfig)}&emoji=true&list=false&tfo=false&scv=false&fdn=false&sort=false&new_name=true`;
@@ -407,7 +407,7 @@ export default {
 					headers: { 'content-type': 'text/plain; charset=utf-8' },
 				});
 				}
-			} else if (userAgent.includes('sing-box') || userAgent.includes('singbox') || (url.searchParams.get('client') && (url.searchParams.get('client').includes('sing-box')))){
+			} else if (userAgent.includes('sing-box') || userAgent.includes('singbox')  || (format === 'singbox' && !userAgent.includes('subconverter')) || (url.searchParams.get('client') && (url.searchParams.get('client').includes('sing-box')))){
 				const responseBody = vlessLinks.join('|');
 				const subconverterUrl = `https://${subconverter}/sub?target=singbox&url=${encodeURIComponent(responseBody)}&insert=false&config=${encodeURIComponent(subconfig)}&emoji=true&list=false&tfo=false&scv=false&fdn=false&sort=false&new_name=true`;
 
@@ -444,7 +444,7 @@ export default {
 				
 		if (userAgent.includes('telegram') || userAgent.includes('twitter') || userAgent.includes('miaoko')) {
 			return new Response('Hello World!');
-		} else if (userAgent.includes('clash')) {
+		} else if (userAgent.includes('clash') || (format === 'clash' && !userAgent.includes('subconverter'))) {
 			const subconverterUrl = `https://${subconverter}/sub?target=clash&url=${encodeURIComponent(request.url)}&insert=false&config=${encodeURIComponent(subconfig)}&emoji=true&list=false&tfo=false&scv=false&fdn=false&sort=false&new_name=true`;
 
 			try {
@@ -487,7 +487,7 @@ export default {
 				});
 			}
 		} else {
-			if(url.searchParams.get('host') && (url.searchParams.get('host').includes('workers.dev') || url.searchParams.get('host').includes('pages.dev'))) {
+			if(host.includes('workers.dev') || host.includes('pages.dev'))) {
 				if (proxyhostsURL) {
 					try {
 						const response = await fetch(proxyhostsURL); 
@@ -587,15 +587,16 @@ export default {
 						path = `/proxyIP=${randomProxyIP}`;
 					}
 				}
-				
-				
+
+				let 伪装域名 = host ;				
 				let 最终路径 = path ;
-				if(url.searchParams.get('host') && (url.searchParams.get('host').includes('workers.dev') || url.searchParams.get('host').includes('pages.dev'))) {
-					最终路径 = `/${url.searchParams.get('host')}${path}`;
-					host = proxyhosts[Math.floor(Math.random() * proxyhosts.length)];
-					EndPS = ' 已启用临时域名中转服务，请尽快绑定自定义域！';
+				let 节点备注 = EndPS ;
+				if(proxyhosts && (host.includes('workers.dev') || host.includes('pages.dev'))) {
+					最终路径 = `/${host}${path}`;
+					伪装域名 = proxyhosts[Math.floor(Math.random() * proxyhosts.length)];
+					节点备注 = `${EndPS} 已启用临时域名中转服务，请尽快绑定自定义域！`;
 				}
-				const vlessLink = `vless://${uuid}@${address}:${port}?encryption=none&security=tls&sni=${host}&fp=random&type=ws&host=${host}&path=${encodeURIComponent(最终路径)}#${encodeURIComponent(addressid + EndPS)}`;
+				const vlessLink = `vless://${uuid}@${address}:${port}?encryption=none&security=tls&sni=${伪装域名}&fp=random&type=ws&host=${伪装域名}&path=${encodeURIComponent(最终路径)}#${encodeURIComponent(addressid + 节点备注)}`;
 			
 				return vlessLink;
 			}).join('\n');
