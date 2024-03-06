@@ -487,7 +487,7 @@ export default {
 				});
 			}
 		} else {
-			if(host.includes('workers.dev') || host.includes('pages.dev'))) {
+			if(host.includes('workers.dev') || host.includes('pages.dev')) {
 				if (proxyhostsURL) {
 					try {
 						const response = await fetch(proxyhostsURL); 
