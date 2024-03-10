@@ -24,9 +24,19 @@ let proxyIPs = [
 	'proxyip.aliyun.fxxk.dedyn.io',
 	'proxyip.multacom.fxxk.dedyn.io',
 	'proxyip.vultr.fxxk.dedyn.io',
+	'proxyip.hk.fxxk.dedyn.io',
+	'proxy.xxxxxxxx.tk',
 ];
 let CMproxyIPs = [
-	{ proxyIP: "proxyip.fxxk.dedyn.io", type: "HK" },
+	{ proxyIP: "proxyip.hk.fxxk.dedyn.io", type: "HK" },
+	{ proxyIP: "proxyip.hk.fxxk.dedyn.io", type: "Hong Kong" },
+	{ proxyIP: "proxyip.jp.fxxk.dedyn.io", type: "JP" },
+	{ proxyIP: "proxyip.jp.fxxk.dedyn.io", type: "osaka" },
+	{ proxyIP: "proxyip.sg.fxxk.dedyn.io", type: "SG" },
+	{ proxyIP: "proxyip.hk.fxxk.dedyn.io", type: "TW" },
+	{ proxyIP: "proxy.xxxxxxxx.tk", type: "KR" },
+	{ proxyIP: "proxyip.fxxk.dedyn.io", type: "US" },
+	{ proxyIP: "proxyip.fxxk.dedyn.io", type: "Los Angeles" },
 ];
 let BotToken ='';
 let ChatID =''; 
