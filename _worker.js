@@ -368,6 +368,56 @@ export default {
 					vlessLinks.push(vlessLink);
 				}
 
+			} else if(url.searchParams.get('client') && (url.searchParams.get('client').includes('cf'))){
+				//返回cf官方ip端口
+				let cfAddressesapi = env.CFADDRESSSAPI ? env.CFADDRESSSAPI.split(",") : ['https://raw.githubusercontent.com/haohaoget/Vless2sub/main/addressesapi.txt'];
+				console.log(cfAddressesapi);
+				//获取ip地址文本
+				for (let apiUrl of cfAddressesapi) {
+					try {
+						
+						const response = await fetch(apiUrl);
+					
+						if (!response.ok) {
+							console.error('获取地址时出错:', response.status, response.statusText);
+							continue;
+						}
+					
+						const text = await response.text();
+						const cflines = text.split('\n');
+						console.log(text);
+						//ipv4或域名识别
+						const addressRegex = /^(?:(?:\d{1,3}\.){3}\d{1,3}|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+|,\d+)#([^#]*)$/;
+						
+						cflines.map(line => {
+							const match = line.match(addressRegex);
+							if (match){
+								const parts = match[0].split(':');
+								const ipOrDomain = parts[0];
+								const subParts = parts[1].split('#');
+								const port = subParts[0];
+								const addressid = subParts[1];
+								if (ntlsports.includes(port)){
+									const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=none&fp=random&type=ws&host=${host}&path=/=2048#${addressid}`;
+									vlessLinks.push(vlessLink);
+								}else{
+									const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=/?ed=2048#${addressid}`;
+									vlessLinks.push(vlessLink);
+								}
+								//console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
+							} else {
+								//console.log(`无效的地址：${line}`);
+							}
+						});
+					} catch (error) {
+						console.error('获取地址时出错:', error);
+						return new Response(`Error: ${error.message}`, {
+							status: 500,
+							headers: { 'content-type': 'text/plain; charset=utf-8' },
+						})
+					}
+				}
+
 			} else {
 				// Generate vlessLinks for ntlsports
 				for (let i = 0; i < ntlsports.length; i++) {
