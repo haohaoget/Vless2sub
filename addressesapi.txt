@@ -4,7 +4,7 @@ ip.sb:443#ip.sb
 cf.090227.xyz:443#cm-cf
 cn.azhz.eu.org:443#cn.azhz.eu.org
 bestcf.onecf.eu.org:8443#bestcf.onecf.eu.org
-bestproxy.onecf.eu.org:8080#bestproxy.onecf.eu.org
+##bestproxy.onecf.eu.org:8080#bestproxy.onecf.eu.org
 104.17.25.1:443#cmi1
 104.18.90.56:443#cmi2
 104.19.46.145:443#cmi3
