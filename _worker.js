@@ -351,7 +351,7 @@ export default {
 				//合成vless链接，要求ip库为纯ip未过滤
 				for (let i = 0; i < proxyAddressesapi.length; i++) {
 					const ip = proxyAddressesapi[i];
-					const vlessLink = `vless://${uuid}@${ip}:80?encryption=none&security=none&fp=random&type=ws&host=${host}&path=/=2048#CFW-${ip}`;
+					const vlessLink = `vless://${uuid}@${ip}:80?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/=2048#CFW-${ip}`;
 					vlessLinks.push(vlessLink);
 				}
 
@@ -398,7 +398,7 @@ export default {
 								const port = subParts[0];
 								const addressid = subParts[1];
 								if (ntlsports.includes(port)){
-									const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=none&fp=random&type=ws&host=${host}&path=/=2048#${addressid}`;
+									const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/=2048#${addressid}`;
 									vlessLinks.push(vlessLink);
 								}else{
 									const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=/?ed=2048#${addressid}`;
