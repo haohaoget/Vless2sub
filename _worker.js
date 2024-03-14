@@ -401,7 +401,7 @@ export default {
 									const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/=2048#${addressid}`;
 									vlessLinks.push(vlessLink);
 								}else{
-									const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=/?ed=2048#${addressid}`;
+									const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=/proxyIP=proxyip.fxxk.dedyn.io#${addressid}`;
 									vlessLinks.push(vlessLink);
 								}
 								//console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
