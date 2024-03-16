@@ -394,7 +394,7 @@ export default {
 							if (match){
 								const [, ipv4OrDomain, ipv6, port, name] = match;
 								//const parts = match[0].split(':');
-								ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
+								const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 								const addressid = name;
 								if (ntlsports.includes(port)){
 									const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/=2048#${addressid}`;
