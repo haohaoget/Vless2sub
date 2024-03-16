@@ -386,17 +386,16 @@ export default {
 						const text = await response.text();
 						const cflines = text.split('\n');
 						console.log(text);
-						//ipv4或域名识别
-						const addressRegex = /^(?:(?:\d{1,3}\.){3}\d{1,3}|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+|,\d+)#([^#]*)$/;
+						//ipv4或ipv6域名识别
+						const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
 						
 						cflines.map(line => {
 							const match = line.match(addressRegex);
 							if (match){
-								const parts = match[0].split(':');
-								const ipOrDomain = parts[0];
-								const subParts = parts[1].split('#');
-								const port = subParts[0];
-								const addressid = subParts[1];
+								const [, ipv4OrDomain, ipv6, port, name] = match;
+								//const parts = match[0].split(':');
+								ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
+								const addressid = name;
 								if (ntlsports.includes(port)){
 									const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/=2048#${addressid}`;
 									vlessLinks.push(vlessLink);
