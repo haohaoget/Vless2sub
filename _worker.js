@@ -693,7 +693,7 @@ export default {
 			} else {
 				const responseBody = vlessLinks.join('\n');
 				const combinedContent = responseBody + '\n' + link; // 合并内容
-				const base64Response = btoa(combinedContent); // 重新进行 Base64 编码
+				const base64Response = btoa(unescape(encodeURIComponent(combinedContent))); // 重新进行 Base64 编码
 
 				const response = new Response(base64Response, {
 				headers: { 'content-type': 'text/plain' },
@@ -863,7 +863,7 @@ export default {
 			}).join('\n');
 			
 			const combinedContent = responseBody + '\n' + link; // 合并内容
-			const base64Response = btoa(combinedContent); // 重新进行 Base64 编码
+			const base64Response = btoa(unescape(encodeURIComponent(combinedContent))); // 重新进行 Base64 编码
 
 			const response = new Response(base64Response, {
 			headers: { 'content-type': 'text/plain' },
