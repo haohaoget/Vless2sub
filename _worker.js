@@ -493,7 +493,7 @@ export default {
 										}
 									}
 	
-									const vlessLink = `vless://${uuid}@[${cm.ip}]:443?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path${path}#${name}v6-${loc}-${delay}`;
+									const vlessLink = `vless://${uuid}@[${cm.ip}]:443?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=${path}#${name}v6-${loc}-${delay}`;
 									//console.log(vlessLink);
 									vlessLinks.push(vlessLink);
 								});
@@ -513,7 +513,7 @@ export default {
 										}
 									}
 	
-									const vlessLink = `vless://${uuid}@${cm.ip}:443?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path${path}#${name}-${loc}-${delay}`;
+									const vlessLink = `vless://${uuid}@${cm.ip}:443?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=${path}#${name}-${loc}-${delay}`;
 									vlessLinks.push(vlessLink);
 								});
 							}
@@ -587,7 +587,7 @@ export default {
 										}
 									}
 	
-									const vlessLink = `vless://${uuid}@[${cm.ip}]:443?encryption=none&security=tls&sni=${cfhostt}&fp=random&type=ws&host=${cfhostt}&path${path}#${name}v6-${loc}-${delay}`;
+									const vlessLink = `vless://${uuid}@[${cm.ip}]:443?encryption=none&security=tls&sni=${cfhostt}&fp=random&type=ws&host=${cfhostt}&path=${path}#${name}v6-${loc}-${delay}`;
 									//console.log(vlessLink);
 									vlessLinks.push(vlessLink);
 								});
@@ -607,7 +607,7 @@ export default {
 										}
 									}
 	
-									const vlessLink = `vless://${uuid}@${cm.ip}:443?encryption=none&security=tls&sni=${cfhostt}&fp=random&type=ws&host=${cfhostt}&path${path}#${name}-${loc}-${delay}`;
+									const vlessLink = `vless://${uuid}@${cm.ip}:443?encryption=none&security=tls&sni=${cfhostt}&fp=random&type=ws&host=${cfhostt}&path=${path}#${name}-${loc}-${delay}`;
 									vlessLinks.push(vlessLink);
 								});
 							}
