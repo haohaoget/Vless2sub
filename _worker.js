@@ -438,143 +438,160 @@ export default {
 				}
 				const key = env.KEY || "o1zrmHAF";
 				const types = ["v4","v6"];
+				const maxRetries = 3; // 最大重试次数
+
 				for (let type of types) {
-					try{
+					let retries = 0;
+
+					while (retries < maxRetries) {
+						try {
 						const headers = {
 							'Content-Type': 'application/json'
 						};
-						
-						let data = {
+
+						const data = {
 							"key": key,
 							"type": type,
 							"cdn_server": 1
 						};
-						const response = await fetch(moniterurl,{
+
+						const response = await fetch(moniterurl, {
 							method: 'POST',
 							headers: headers,
 							body: JSON.stringify(data)
 						});
-						
-						if (!response.ok) {
-							console.error('获取地址时出错:', response.status, response.statusText);
-							continue;
-						}
-						
-						const responseData = await response.text();
-						
-						// 按照delay的大小排序，如果delay相同则按照speed大小排序，如果都相同则取默认顺序
-						const sortedCM = JSON.parse(responseData).info.CM.sort((a, b) => {
-							if (a.delay === b.delay) {
-								return a.speed + b.speed;
-							}
-							return a.delay - b.delay;
-						});
-						const sortedCT = JSON.parse(responseData).info.CT.sort((a, b) => {
-							if (a.delay === b.delay) {
-								return a.speed + b.speed;
-							}
-							return a.delay - b.delay;
-						});
-						const classsorted = [sortedCM, sortedCT];
-						for (let sorted of classsorted){
-							if(type == "v6"){
-								// 提取前三个或所有CM的ip、colo和line_name
-								const numberOfCMsToExtract = Math.min(sorted.length, 3);
-								sorted.slice(0, numberOfCMsToExtract).map(cm => {
-									// 遍历CMproxyIPs数组查找匹配项
-									let path = "/proxyIP=proxyip.fxxk.dedyn.io";
-									const loc = cm.colo;
-									const name = cm.line_name;
-									const delay = cm.delay;
-									for (let item of CFCproxyIPs) {
-										if (loc.includes(item.type)) {
-											path = `/proxyIP=${item.proxyIP}`;
-											break; // 找到匹配项，跳出循环
-										}
-									}
-	
-									const vlessLink = `vless://${uuid}@[${cm.ip}]:443?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=${path}#${name}v6-${loc}-${delay}`;
-									//console.log(vlessLink);
-									vlessLinks.push(vlessLink);
-								});
-							}else{
-								// 提取前三个或所有CM的ip、colo和line_name
-								const numberOfCMsToExtract = Math.min(sorted.length, 3);
-								sorted.slice(0, numberOfCMsToExtract).map(cm => {
-									// 遍历CMproxyIPs数组查找匹配项
-									let path = "/proxyIP=proxyip.fxxk.dedyn.io";
-									const loc = cm.colo;
-									const name = cm.line_name;
-									const delay = cm.delay;
-									for (let item of CFCproxyIPs) {
-										if (loc.includes(item.type)) {
-											path = `/proxyIP=${item.proxyIP}`;
-											break; // 找到匹配项，跳出循环
-										}
-									}
-	
-									const vlessLink = `vless://${uuid}@${cm.ip}:443?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=${path}#${name}-${loc}-${delay}`;
-									vlessLinks.push(vlessLink);
-								});
-							}
-						}
 
+						if (response.ok) {
+							const responseData = await response.text();
+
+							// 按照delay的大小排序，如果delay相同则按照speed大小排序，如果都相同则取默认顺序
+							const sortedCM = JSON.parse(responseData).info.CM.sort((a, b) => {
+							if (a.delay === b.delay) {
+								return a.speed + b.speed;
+							}
+							return a.delay - b.delay;
+							});
+							const sortedCT = JSON.parse(responseData).info.CT.sort((a, b) => {
+							if (a.delay === b.delay) {
+								return a.speed + b.speed;
+							}
+							return a.delay - b.delay;
+							});
+							const classsorted = [sortedCM, sortedCT];
+
+							for (let sorted of classsorted) {
+							if (type == "v6") {
+								// 提取前三个或所有CM的ip、colo和line_name
+								const numberOfCMsToExtract = Math.min(sorted.length, 3);
+								sorted.slice(0, numberOfCMsToExtract).map(cm => {
+								// 遍历CMproxyIPs数组查找匹配项
+								let path = "/proxyIP=proxyip.fxxk.dedyn.io";
+								const loc = cm.colo;
+								const name = cm.line_name;
+								const delay = cm.delay;
+								for (let item of CFCproxyIPs) {
+									if (loc.includes(item.type)) {
+									path = `/proxyIP=${item.proxyIP}`;
+									break; // 找到匹配项，跳出循环
+									}
+								}
+
+								const vlessLink = `vless://${uuid}@[${cm.ip}]:443?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=${path}#${name}v6-${loc}-${delay}`;
+								//console.log(vlessLink);
+								vlessLinks.push(vlessLink);
+								});
+							} else {
+								// 提取前三个或所有CM的ip、colo和line_name
+								const numberOfCMsToExtract = Math.min(sorted.length, 3);
+								sorted.slice(0, numberOfCMsToExtract).map(cm => {
+								// 遍历CMproxyIPs数组查找匹配项
+								let path = "/proxyIP=proxyip.fxxk.dedyn.io";
+								const loc = cm.colo;
+								const name = cm.line_name;
+								const delay = cm.delay;
+								for (let item of CFCproxyIPs) {
+									if (loc.includes(item.type)) {
+									path = `/proxyIP=${item.proxyIP}`;
+									break; // 找到匹配项，跳出循环
+									}
+								}
+
+								const vlessLink = `vless://${uuid}@${cm.ip}:443?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=${path}#${name}-${loc}-${delay}`;
+								vlessLinks.push(vlessLink);
+								});
+							}
+							}
+
+							// 如果请求成功，跳出重试循环
+							break;
+						} else {
+							console.error(`获取地址时出错 (${retries + 1}/${maxRetries})`, response.status, response.statusText);
+							retries++;
+						}
+						} catch (error) {
+						console.error(`获取地址时出错 (${retries + 1}/${maxRetries})`, error);
+						retries++;
+						}
 					}
-					catch (error) {
-						console.error('获取地址时出错:', error);
-						return new Response(`Error: ${error.message}`, {
-							status: 500,
-							headers: { 'content-type': 'text/plain; charset=utf-8' },
-					})
-					}
+
+					// 如果重试次数用尽，返回错误响应
+					// if (retries === maxRetries) {
+					// 	return new Response(`Error: 获取地址时出错,已重试${maxRetries}次`, {
+					// 	status: 500,
+					// 	headers: { 'content-type': 'text/plain; charset=utf-8' },
+					// 	});
 				}
+
 			}else if(url.searchParams.get('client') && (url.searchParams.get('client').includes('cloudfront'))){
 				const cfhostt = env.CFHOSTT || cfpagehost;
 				const key = env.KEY || "o1zrmHAF";
 				const types = ["v4","v6"];
+				const maxRetries = 3; // 最大重试次数
+
 				for (let type of types) {
-					try{
-						const headers = {
-							'Content-Type': 'application/json'
-						};
-						
-						let data = {
-							"key": key,
-							"type": type,
-							"cdn_server": 2
-						};
-						const response = await fetch(moniterurl,{
-							method: 'POST',
-							headers: headers,
-							body: JSON.stringify(data)
-						});
-						
-						if (!response.ok) {
-							console.error('获取地址时出错:', response.status, response.statusText);
-							continue;
-						}
-						
-						const responseData = await response.text();
-						
-						// 按照delay的大小排序，如果delay相同则按照speed大小排序，如果都相同则取默认顺序
-						const sortedCM = JSON.parse(responseData).info.CM.sort((a, b) => {
-							if (a.delay === b.delay) {
-								return a.speed + b.speed;
-							}
-							return a.delay - b.delay;
-						});
-						const sortedCT = JSON.parse(responseData).info.CT.sort((a, b) => {
-							if (a.delay === b.delay) {
-								return a.speed + b.speed;
-							}
-							return a.delay - b.delay;
-						});
-						const classsorted = [sortedCM, sortedCT];
-						for (let sorted of classsorted){
-							if(type == "v6"){
-								// 提取前三个或所有CM的ip、colo和line_name
-								const numberOfCMsToExtract = Math.min(sorted.length, 3);
-								sorted.slice(0, numberOfCMsToExtract).map(cm => {
+					let retries = 0;
+
+					while (retries < maxRetries) {
+						try {
+							const headers = {
+								'Content-Type': 'application/json'
+							};
+
+							const data = {
+								"key": key,
+								"type": type,
+								"cdn_server": 2
+							};
+
+							const response = await fetch(moniterurl, {
+								method: 'POST',
+								headers: headers,
+								body: JSON.stringify(data)
+							});
+
+							if (response.ok) {
+								const responseData = await response.text();
+
+								// 按照delay的大小排序，如果delay相同则按照speed大小排序，如果都相同则取默认顺序
+								const sortedCM = JSON.parse(responseData).info.CM.sort((a, b) => {
+								if (a.delay === b.delay) {
+									return a.speed + b.speed;
+								}
+								return a.delay - b.delay;
+								});
+								const sortedCT = JSON.parse(responseData).info.CT.sort((a, b) => {
+								if (a.delay === b.delay) {
+									return a.speed + b.speed;
+								}
+								return a.delay - b.delay;
+								});
+								const classsorted = [sortedCM, sortedCT];
+
+								for (let sorted of classsorted) {
+								if (type == "v6") {
+									// 提取前三个或所有CM的ip、colo和line_name
+									const numberOfCMsToExtract = Math.min(sorted.length, 3);
+									sorted.slice(0, numberOfCMsToExtract).map(cm => {
 									// 遍历CMproxyIPs数组查找匹配项
 									let path = "/proxyIP=proxyip.fxxk.dedyn.io";
 									const loc = cm.colo;
@@ -582,19 +599,19 @@ export default {
 									const delay = cm.delay;
 									for (let item of CFCproxyIPs) {
 										if (loc.includes(item.type)) {
-											path = `/proxyIP=${item.proxyIP}`;
-											break; // 找到匹配项，跳出循环
+										path = `/proxyIP=${item.proxyIP}`;
+										break; // 找到匹配项，跳出循环
 										}
 									}
-	
+
 									const vlessLink = `vless://${uuid}@[${cm.ip}]:443?encryption=none&security=tls&sni=${cfhostt}&fp=random&type=ws&host=${cfhostt}&path=${path}#${name}v6-${loc}-${delay}`;
 									//console.log(vlessLink);
 									vlessLinks.push(vlessLink);
-								});
-							}else{
-								// 提取前三个或所有CM的ip、colo和line_name
-								const numberOfCMsToExtract = Math.min(sorted.length, 3);
-								sorted.slice(0, numberOfCMsToExtract).map(cm => {
+									});
+								} else {
+									// 提取前三个或所有CM的ip、colo和line_name
+									const numberOfCMsToExtract = Math.min(sorted.length, 3);
+									sorted.slice(0, numberOfCMsToExtract).map(cm => {
 									// 遍历CMproxyIPs数组查找匹配项
 									let path = "/proxyIP=proxyip.fxxk.dedyn.io";
 									const loc = cm.colo;
@@ -602,27 +619,37 @@ export default {
 									const delay = cm.delay;
 									for (let item of CFCproxyIPs) {
 										if (loc.includes(item.type)) {
-											path = `/proxyIP=${item.proxyIP}`;
-											break; // 找到匹配项，跳出循环
+										path = `/proxyIP=${item.proxyIP}`;
+										break; // 找到匹配项，跳出循环
 										}
 									}
-	
+
 									const vlessLink = `vless://${uuid}@${cm.ip}:443?encryption=none&security=tls&sni=${cfhostt}&fp=random&type=ws&host=${cfhostt}&path=${path}#${name}-${loc}-${delay}`;
 									vlessLinks.push(vlessLink);
-								});
-							}
-						}
+									});
+								}
+								}
 
+								// 如果请求成功，跳出重试循环
+								break;
+							} else {
+								console.error(`获取地址时出错 (${retries + 1}/${maxRetries})`, response.status, response.statusText);
+								retries++;
+							}
+						} catch (error) {
+						console.error(`获取地址时出错 (${retries + 1}/${maxRetries})`, error);
+						retries++;
+						}
 					}
-					catch (error) {
-						console.error('获取地址时出错:', error);
-						return new Response(`Error: ${error.message}`, {
-							status: 500,
-							headers: { 'content-type': 'text/plain; charset=utf-8' },
-						})
-					}
+
+					// 如果重试次数用尽，返回错误响应
+					// if (retries === maxRetries) {
+					// 	return new Response(`Error: 获取地址时出错,已重试${maxRetries}次`, {
+					// 	status: 500,
+					// 	headers: { 'content-type': 'text/plain; charset=utf-8' },
+					// 	});
 				}
-			}else {
+			} else {
 				// Generate vlessLinks for ntlsports
 				for (let i = 0; i < ntlsports.length; i++) {
 					const port = ntlsports[i];
