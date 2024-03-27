@@ -462,22 +462,28 @@ export default {
 						});
 
 						if (response.ok) {
-							const responseData = await response.text();
-
+							const responsetext = await response.text();
+							const responseData = JSON.parse(responsetext);
 							// 按照delay的大小排序，如果delay相同则按照speed大小排序，如果都相同则取默认顺序
-							const sortedCM = JSON.parse(responseData).info.CM.sort((a, b) => {
+							const sortedCM = responseData.info.CM.sort((a, b) => {
 							if (a.delay === b.delay) {
 								return a.speed + b.speed;
 							}
 							return a.delay - b.delay;
 							});
-							const sortedCT = JSON.parse(responseData).info.CT.sort((a, b) => {
+							const sortedCT = responseData.info.CT.sort((a, b) => {
 							if (a.delay === b.delay) {
 								return a.speed + b.speed;
 							}
 							return a.delay - b.delay;
 							});
-							const classsorted = [sortedCM, sortedCT];
+							const sortedCU = responseData.info.CU.sort((a, b) => {
+							if (a.delay === b.delay) {
+								return a.speed + b.speed;
+							}
+							return a.delay - b.delay;
+							});
+							const classsorted = [sortedCM, sortedCT, sortedCU];
 
 							for (let sorted of classsorted) {
 							if (type == "v6") {
@@ -570,22 +576,28 @@ export default {
 							});
 
 							if (response.ok) {
-								const responseData = await response.text();
-
+								const responsetext = await response.text();
+								const responseData = JSON.parse(responsetext);
 								// 按照delay的大小排序，如果delay相同则按照speed大小排序，如果都相同则取默认顺序
-								const sortedCM = JSON.parse(responseData).info.CM.sort((a, b) => {
+								const sortedCM = responseData.info.CM.sort((a, b) => {
 								if (a.delay === b.delay) {
 									return a.speed + b.speed;
 								}
 								return a.delay - b.delay;
 								});
-								const sortedCT = JSON.parse(responseData).info.CT.sort((a, b) => {
+								const sortedCT = responseData.info.CT.sort((a, b) => {
 								if (a.delay === b.delay) {
 									return a.speed + b.speed;
 								}
 								return a.delay - b.delay;
 								});
-								const classsorted = [sortedCM, sortedCT];
+								const sortedCU = responseData.info.CU.sort((a, b) => {
+								if (a.delay === b.delay) {
+									return a.speed + b.speed;
+								}
+								return a.delay - b.delay;
+								});
+								const classsorted = [sortedCM, sortedCT, sortedCU];
 
 								for (let sorted of classsorted) {
 								if (type == "v6") {
