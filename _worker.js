@@ -435,76 +435,68 @@ export default {
 						})
 					}
 				}
-				const cfv4_api = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cfv4_api') : null;
-				const cfv6_api = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cfv6_api') : null;
+				const cf_api = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cf_api') : null;
 				//ipv4或ipv6域名识别
 				const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
 				
-				const apis = [cfv4_api.split('\n'), cfv6_api.split('\n')];
-				for(let api of apis){
-					console.log(api);
-					api.map(line => {
-						const match = line.match(addressRegex);
-						if (match){
-							let path = "/proxyIP=proxyip.fxxk.dedyn.io";
-							const [, ipv4OrDomain, ipv6, port, name] = match;
-							const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
-							const addressid = name;
-							for (let item of CFCproxyIPs) {
-								if (addressid.includes(item.type)) {
-									path = `/proxyIP=${item.proxyIP}`;
-									break; // 找到匹配项，跳出循环
-								}
+				const api = cf_api.split('\n');
+				api.map(line => {
+					const match = line.match(addressRegex);
+					if (match){
+						let path = "/proxyIP=proxyip.fxxk.dedyn.io";
+						const [, ipv4OrDomain, ipv6, port, name] = match;
+						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
+						const addressid = name;
+						for (let item of CFCproxyIPs) {
+							if (addressid.includes(item.type)) {
+								path = `/proxyIP=${item.proxyIP}`;
+								break; // 找到匹配项，跳出循环
 							}
-							if (ntlsports.includes(port)){
-								const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=${path}#${addressid}`;
-								vlessLinks.push(vlessLink);
-							}else{
-								const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=${path}#${addressid}`;
-								vlessLinks.push(vlessLink);
-							}
-							console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
-						} else {
-							console.log(`无效的地址：${line}`);
 						}
-					
-					});
-				}
+						if (ntlsports.includes(port)){
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=${path}#${addressid}`;
+							vlessLinks.push(vlessLink);
+						}else{
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=${path}#${addressid}`;
+							vlessLinks.push(vlessLink);
+						}
+						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
+					} else {
+						console.log(`无效的地址：${line}`);
+					}
+				
+				});
 				
 			}else if(url.searchParams.get('client') && (url.searchParams.get('client').includes('cloudfront'))){
 				const cfhostt = env.CFHOSTT || cfpagehost;
-				const cftv4_api = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cftv4_api') : null;
-				const cftv6_api = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cftv6_api') : null;
+				const cft_api = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cft_api') : null;
 				///ipv4或ipv6域名识别
 				const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
 				
-				const apis = [cftv4_api.split('\n'), cftv6_api.split('\n')];
-				for(let api of apis){
-					console.log(api);
-					api.map(line => {
-						const match = line.match(addressRegex);
-						if (match){
-							let path = "/proxyIP=proxyip.fxxk.dedyn.io";
-							const [, ipv4OrDomain, ipv6, port, name] = match;
-							const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
-							const addressid = name;
-							for (let item of CFCproxyIPs) {
-								if (addressid.includes(item.type)) {
-									path = `/proxyIP=${item.proxyIP}`;
-									break; // 找到匹配项，跳出循环
-								}
+				const api = cft_api.split('\n');
+				api.map(line => {
+					const match = line.match(addressRegex);
+					if (match){
+						let path = "/proxyIP=proxyip.fxxk.dedyn.io";
+						const [, ipv4OrDomain, ipv6, port, name] = match;
+						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
+						const addressid = name;
+						for (let item of CFCproxyIPs) {
+							if (addressid.includes(item.type)) {
+								path = `/proxyIP=${item.proxyIP}`;
+								break; // 找到匹配项，跳出循环
 							}
-
-							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfhostt}&fp=random&type=ws&host=${cfhostt}&path=${path}#${addressid}`;
-							vlessLinks.push(vlessLink);
-
-							console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
-						} else {
-							console.log(`无效的地址：${line}`);
 						}
-					
-					});
-				}
+
+						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfhostt}&fp=random&type=ws&host=${cfhostt}&path=${path}#${addressid}`;
+						vlessLinks.push(vlessLink);
+
+						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
+					} else {
+						console.log(`无效的地址：${line}`);
+					}
+				
+				});
 			} else {
 				// Generate vlessLinks for ntlsports
 				for (let i = 0; i < ntlsports.length; i++) {
