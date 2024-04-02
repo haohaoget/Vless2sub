@@ -230,7 +230,7 @@ export default {
 		if (mytoken !== '' && url.pathname.includes(mytoken)) {
 			host = env.HOST || "edgetunnel-2z2.pages.dev";
 			uuid = env.UUID || "30e9c5c8-ed28-4cd9-b008-dc67277f8b02";
-			path = env.PATH || "/?ed=2048";
+			path = env.PATH || "/?ed=2560";
 			edgetunnel = env.ED || edgetunnel;
 			RproxyIP = env.RPROXYIP || RproxyIP;
 
@@ -304,7 +304,7 @@ export default {
 			}
 			
 			if (!path || path.trim() === '') {
-				path = '/?ed=2048';
+				path = '/?ed=2560';
 			} else {
 				// 如果第一个字符不是斜杠，则在前面添加一个斜杠
 				path = (path[0] === '/') ? path : '/' + path;
@@ -368,76 +368,58 @@ export default {
 				//合成vless链接，要求ip库为纯ip未过滤
 				for (let i = 0; i < proxyAddressesapi.length; i++) {
 					const ip = proxyAddressesapi[i];
-					const vlessLink = `vless://${uuid}@${ip}:80?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/=2048#CFW-${ip}`;
+					const vlessLink = `vless://${uuid}@${ip}:80?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/=2560#CFW-${ip}`;
 					vlessLinks.push(vlessLink);
 				}
 
 				// 合成HTTPS的vless链接
 				for (let i = 0; i < proxyAddressesapi.length; i++) {
 					const ip = proxyAddressesapi[i];
-					const vlessLink = `vless://${uuid}@${ip}:8443?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=/?ed=2048#CFWS-${ip}`;
+					const vlessLink = `vless://${uuid}@${ip}:8443?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=/?ed=2560#CFWS-${ip}`;
 					vlessLinks.push(vlessLink);
 				}
 				
 				if (cfAddressesapi.length > 0) {
 					const ip = cfAddressesapi[0];
-					const vlessLink = `vless://${uuid}@${ip}:8443?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=/?ed=2048#CF-${ip}`;
+					const vlessLink = `vless://${uuid}@${ip}:8443?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=/?ed=2560#CF-${ip}`;
 					vlessLinks.push(vlessLink);
 				}
 
 			} else if(url.searchParams.get('client') && (url.searchParams.get('client').includes('cf'))){
-				//返回cf官方ip端口
-				let cfAddressesapi = env.CFADDRESSSAPI ? env.CFADDRESSSAPI.split(",") : ['https://raw.githubusercontent.com/haohaoget/Vless2sub/main/addressesapi.txt'];
-				//console.log(cfAddressesapi);
-				//获取ip地址文本
-				for (let apiUrl of cfAddressesapi) {
-					try {
-						
-						const response = await fetch(apiUrl);
-					
-						if (!response.ok) {
-							console.error('获取地址时出错:', response.status, response.statusText);
-							continue;
-						}
-					
-						const text = await response.text();
-						const cflines = text.split('\n');
-						//console.log(text);
-						//ipv4或ipv6域名识别
-						const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
-						
-						cflines.map(line => {
-							const match = line.match(addressRegex);
-							if (match){
-								const [, ipv4OrDomain, ipv6, port, name] = match;
-								const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
-								const addressid = name;
-								if (ntlsports.includes(port)){
-									const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/=2048#${addressid}`;
-									vlessLinks.push(vlessLink);
-								}else{
-									const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=/proxyIP=proxyip.fxxk.dedyn.io#${addressid}`;
-									vlessLinks.push(vlessLink);
-								}
-								//console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
-							} else {
-								//console.log(`无效的地址：${line}`);
-							}
-						
-						});
-						
-
-					} catch (error) {
-						console.error('获取地址时出错:', error);
-						return new Response(`Error: ${error.message}`, {
-							status: 500,
-							headers: { 'content-type': 'text/plain; charset=utf-8' },
-						})
-					}
-				}
-				const cf_api = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cf_api') : null;
 				//ipv4或ipv6域名识别
 				const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
+				const cfaddressapi = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cfaddressapi') : null;
+				
+				const cfapi = cfaddressapi.split('\n');
+				cfapi.map(line => {
+					const match = line.match(addressRegex);
+					if (match){
+						let path = "/proxyIP=proxyip.fxxk.dedyn.io";
+						const [, ipv4OrDomain, ipv6, port, name] = match;
+						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
+						const addressid = name;
+						// for (let item of CFCproxyIPs) {
+						// 	if (addressid.includes(item.type)) {
+						// 		path = `/proxyIP=${item.proxyIP}`;
+						// 		break; // 找到匹配项，跳出循环
+						// 	}
+						// }
+						if (ntlsports.includes(port)){
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/=2560#${addressid}`;
+							vlessLinks.push(vlessLink);
+						}else{
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=${path}#${addressid}`;
+							vlessLinks.push(vlessLink);
+						}
+						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
+					} else {
+						console.log(`无效的地址：${line}`);
+					}
+				
+				});
+
+				
+				const cf_api = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cf_api') : null;
 				
 				const api = cf_api.split('\n');
 				api.map(line => {
@@ -469,10 +451,38 @@ export default {
 				
 			}else if(url.searchParams.get('client') && (url.searchParams.get('client').includes('cloudfront'))){
 				const cfhostt = env.CFHOSTT || cfpagehost;
-				const cft_api = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cft_api') : null;
 				///ipv4或ipv6域名识别
 				const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
+
+				const cftaddressapi = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cftaddressapi') : null;
 				
+				const cftapi = cftaddressapi.split('\n');
+				cftapi.map(line => {
+					const match = line.match(addressRegex);
+					if (match){
+						let path = "/proxyIP=proxyip.fxxk.dedyn.io";
+						const [, ipv4OrDomain, ipv6, port, name] = match;
+						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
+						const addressid = name;
+						for (let item of CFCproxyIPs) {
+							if (addressid.includes(item.type)) {
+								path = `/proxyIP=${item.proxyIP}`;
+								break; // 找到匹配项，跳出循环
+							}
+						}
+
+						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfhostt}&fp=random&type=ws&host=${cfhostt}&path=${path}#${addressid}`;
+						vlessLinks.push(vlessLink);
+						
+						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
+					} else {
+						console.log(`无效的地址：${line}`);
+					}
+				
+				});
+				
+				const cft_api = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cft_api') : null;
+								
 				const api = cft_api.split('\n');
 				api.map(line => {
 					const match = line.match(addressRegex);
@@ -502,7 +512,7 @@ export default {
 				for (let i = 0; i < ntlsports.length; i++) {
 					const port = ntlsports[i];
 					const ip = i >= ntlsports.length - 3 ? bestcfip : bestproxyip;
-					const vlessLink = `vless://${uuid}@${ip}:${port}?encryption=none&security=none&fp=random&type=ws&host=${host}&path=/=2048#CFWorker-${port}`;
+					const vlessLink = `vless://${uuid}@${ip}:${port}?encryption=none&security=none&fp=random&type=ws&host=${host}&path=/=2560#CFWorker-${port}`;
 
 					vlessLinks.push(vlessLink);
 				}
@@ -511,7 +521,7 @@ export default {
 				for (let i = 0; i < tlsports.length; i++) {
 					const port = tlsports[i];
 					const ip = i >= tlsports.length - 3 ? bestcfip : bestproxyip;
-					const vlessLink = `vless://${uuid}@${ip}:${port}?encryption=none&security=tls&sni=${host}&fp=random&type=ws&host=${host}&path=/?ed=2048#CFWorker-${port}`;;
+					const vlessLink = `vless://${uuid}@${ip}:${port}?encryption=none&security=tls&sni=${host}&fp=random&type=ws&host=${host}&path=/?ed=2560#CFWorker-${port}`;;
 					vlessLinks.push(vlessLink);
 				}
 			}
