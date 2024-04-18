@@ -27,30 +27,30 @@ let proxyIPs = [
 ];
 
 const CFCproxyIPs = [
-	{ proxyIP: "proxyip.hk.fxxk.dedyn.io", type: "HKG" },
-	{ proxyIP: "proxyip.jp.fxxk.dedyn.io", type: "FUK" },
-	{ proxyIP: "proxyip.jp.fxxk.dedyn.io", type: "OKA" },
-	{ proxyIP: "proxyip.jp.fxxk.dedyn.io", type: "KIX" },
-	{ proxyIP: "proxyip.jp.fxxk.dedyn.io", type: "NRT" },
-	{ proxyIP: "proxyip.sg.fxxk.dedyn.io", type: "SIN" },
-	{ proxyIP: "proxyip.hk.fxxk.dedyn.io", type: "TPE" },
-	{ proxyIP: "proxy.xxxxxxxx.tk", type: "ICN" },
-	{ proxyIP: "proxyip.fxxk.dedyn.io", type: "LAX" },
-	{ proxyIP: "proxyip.fxxk.dedyn.io", type: "SEA" },
-	{ proxyIP: "proxyip.fxxk.dedyn.io", type: "SJC" },
-	{ proxyIP: "proxyip.fxxk.dedyn.io", type: "SFO" },
+	{ proxyIP: "hk.ipdb.rr.nu", type: "HKG" },
+	{ proxyIP: "jp.ipdb.rr.nu", type: "FUK" },
+	{ proxyIP: "jp.ipdb.rr.nu", type: "OKA" },
+	{ proxyIP: "jp.ipdb.rr.nu", type: "KIX" },
+	{ proxyIP: "jp.ipdb.rr.nu", type: "NRT" },
+	{ proxyIP: "sg.ipdb.rr.nu", type: "SIN" },
+	{ proxyIP: "hk.ipdb.rr.nu", type: "TPE" },
+	{ proxyIP: "jp.ipdb.rr.nu", type: "ICN" },
+	{ proxyIP: "us.ipdb.rr.nu", type: "LAX" },
+	{ proxyIP: "us.ipdb.rr.nu", type: "SEA" },
+	{ proxyIP: "us.ipdb.rr.nu", type: "SJC" },
+	{ proxyIP: "us.ipdb.rr.nu", type: "SFO" },
 ];
 
 const CMproxyIPs = [
-	{ proxyIP: "proxyip.hk.fxxk.dedyn.io", type: "HK" },
-	{ proxyIP: "proxyip.hk.fxxk.dedyn.io", type: "Hong Kong" },
-	{ proxyIP: "proxyip.jp.fxxk.dedyn.io", type: "JP" },
-	{ proxyIP: "proxyip.jp.fxxk.dedyn.io", type: "osaka" },
-	{ proxyIP: "proxyip.sg.fxxk.dedyn.io", type: "SG" },
-	{ proxyIP: "proxyip.hk.fxxk.dedyn.io", type: "TW" },
-	{ proxyIP: "proxy.xxxxxxxx.tk", type: "KR" },
-	{ proxyIP: "proxyip.fxxk.dedyn.io", type: "US" },
-	{ proxyIP: "proxyip.fxxk.dedyn.io", type: "Los Angeles" },
+	{ proxyIP: "hk.ipdb.rr.nu", type: "HK" },
+	{ proxyIP: "hk.ipdb.rr.nu", type: "Hong Kong" },
+	{ proxyIP: "jp.ipdb.rr.nu", type: "JP" },
+	{ proxyIP: "jp.ipdb.rr.nu", type: "osaka" },
+	{ proxyIP: "sg.ipdb.rr.nu", type: "SG" },
+	{ proxyIP: "hk.ipdb.rr.nu", type: "TW" },
+	{ proxyIP: "jp.ipdb.rr.nu", type: "KR" },
+	{ proxyIP: "us.ipdb.rr.nu", type: "US" },
+	{ proxyIP: "us.ipdb.rr.nu", type: "Los Angeles" },
 ];
 let BotToken ='';
 let ChatID =''; 
