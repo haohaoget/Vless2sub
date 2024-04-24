@@ -34,7 +34,7 @@ const CFCproxyIPs = [
 	{ proxyIP: "jp.ipdb.rr.nu", type: "NRT" },
 	{ proxyIP: "sg.ipdb.rr.nu", type: "SIN" },
 	{ proxyIP: "hk.ipdb.rr.nu", type: "TPE" },
-	{ proxyIP: "jp.ipdb.rr.nu", type: "ICN" },
+	{ proxyIP: "kr.ipdb.rr.nu", type: "ICN" },
 	{ proxyIP: "us.ipdb.rr.nu", type: "LAX" },
 	{ proxyIP: "us.ipdb.rr.nu", type: "SEA" },
 	{ proxyIP: "us.ipdb.rr.nu", type: "SJC" },
@@ -48,7 +48,7 @@ const CMproxyIPs = [
 	{ proxyIP: "jp.ipdb.rr.nu", type: "osaka" },
 	{ proxyIP: "sg.ipdb.rr.nu", type: "SG" },
 	{ proxyIP: "hk.ipdb.rr.nu", type: "TW" },
-	{ proxyIP: "jp.ipdb.rr.nu", type: "KR" },
+	{ proxyIP: "kr.ipdb.rr.nu", type: "KR" },
 	{ proxyIP: "us.ipdb.rr.nu", type: "US" },
 	{ proxyIP: "us.ipdb.rr.nu", type: "Los Angeles" },
 ];
@@ -394,7 +394,7 @@ export default {
 				cfapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=proxyip.fxxk.dedyn.io";
+						let path = "/proxyIP=us.ipdb.rr.nu";
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
@@ -425,7 +425,7 @@ export default {
 				api.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=proxyip.fxxk.dedyn.io";
+						let path = "/proxyIP=us.ipdb.rr.nu";
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
@@ -460,7 +460,7 @@ export default {
 				cftapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=proxyip.fxxk.dedyn.io";
+						let path = "/proxyIP=us.ipdb.rr.nu";
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
@@ -487,7 +487,7 @@ export default {
 				api.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=proxyip.fxxk.dedyn.io";
+						let path = "/proxyIP=us.ipdb.rr.nu";
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
