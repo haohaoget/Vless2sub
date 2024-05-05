@@ -23,7 +23,7 @@ let edgetunnel = 'ed';
 let RproxyIP = 'false';
 let proxyIPs = [
 	'proxyip.aliyun.fxxk.dedyn.io',
-	'proxy.xxxxxxxx.tk',
+	'my-telegram-is-herocore.onecf.eu.org',
 ];
 
 const CFCproxyIPs = [
@@ -42,15 +42,36 @@ const CFCproxyIPs = [
 ];
 
 const CMproxyIPs = [
+	{ proxyIP: "kr.ipdb.rr.nu", type: "KR" },
 	{ proxyIP: "hk.ipdb.rr.nu", type: "HK" },
 	{ proxyIP: "hk.ipdb.rr.nu", type: "Hong Kong" },
 	{ proxyIP: "jp.ipdb.rr.nu", type: "JP" },
 	{ proxyIP: "jp.ipdb.rr.nu", type: "osaka" },
+	{ proxyIP: "jp.ipdb.rr.nu", type: "tokyo" },
 	{ proxyIP: "sg.ipdb.rr.nu", type: "SG" },
 	{ proxyIP: "hk.ipdb.rr.nu", type: "TW" },
+	{ proxyIP: "hk.ipdb.rr.nu", type: "taipei" },
 	{ proxyIP: "kr.ipdb.rr.nu", type: "KR" },
 	{ proxyIP: "us.ipdb.rr.nu", type: "US" },
 	{ proxyIP: "us.ipdb.rr.nu", type: "Los Angeles" },
+	{ proxyIP: "hk.ipdb.rr.nu", type: "香港" },
+	{ proxyIP: "hk.ipdb.rr.nu", type: "台湾" },
+	{ proxyIP: "jp.ipdb.rr.nu", type: "日本" },
+	{ proxyIP: "jp.ipdb.rr.nu", type: "大阪" },
+	{ proxyIP: "sg.ipdb.rr.nu", type: "狮城" },
+	{ proxyIP: "kr.ipdb.rr.nu", type: "韩国" },
+	{ proxyIP: "kr.ipdb.rr.nu", type: "首尔" },
+	{ proxyIP: "kr.ipdb.rr.nu", type: "春川" },
+	{ proxyIP: "us.ipdb.rr.nu", type: "美国" },
+	{ proxyIP: "us.ipdb.rr.nu", type: "加拿大" },
+	{ proxyIP: "us.ipdb.rr.nu", type: "澳洲" },
+	{ proxyIP: "hk.ipdb.rr.nu", type: "移动" },
+	{ proxyIP: "hk.ipdb.rr.nu", type: "联通" },
+	{ proxyIP: "us.ipdb.rr.nu", type: "洛杉矶" },
+	{ proxyIP: "de.ipdb.rr.nu", type: "德国" },
+	{ proxyIP: "de.ipdb.rr.nu", type: "瑞典" },
+	{ proxyIP: "nl.ipdb.rr.nu", type: "西班牙" },
+	{ proxyIP: "nl.ipdb.rr.nu", type: "英国" },
 ];
 let BotToken ='';
 let ChatID =''; 
