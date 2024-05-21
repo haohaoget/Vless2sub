@@ -27,57 +27,57 @@ let proxyIPs = [
 ];
 
 const CFCproxyIPs = [
-	{ proxyIP: "hk.ipdb.rr.nu", type: "HKG" },
-	{ proxyIP: "jp.ipdb.rr.nu", type: "FUK" },
-	{ proxyIP: "jp.ipdb.rr.nu", type: "OKA" },
-	{ proxyIP: "jp.ipdb.rr.nu", type: "KIX" },
-	{ proxyIP: "jp.ipdb.rr.nu", type: "NRT" },
-	{ proxyIP: "sg.ipdb.rr.nu", type: "SIN" },
-	{ proxyIP: "hk.ipdb.rr.nu", type: "TPE" },
-	{ proxyIP: "kr.ipdb.rr.nu", type: "ICN" },
-	{ proxyIP: "us.ipdb.rr.nu", type: "LAX" },
-	{ proxyIP: "us.ipdb.rr.nu", type: "SEA" },
-	{ proxyIP: "us.ipdb.rr.nu", type: "SJC" },
-	{ proxyIP: "us.ipdb.rr.nu", type: "SFO" },
+	{ proxyIP: "hk.ipdb.2287405.xyz", type: "HKG" },
+	{ proxyIP: "jp.ipdb.2287405.xyz", type: "FUK" },
+	{ proxyIP: "jp.ipdb.2287405.xyz", type: "OKA" },
+	{ proxyIP: "jp.ipdb.2287405.xyz", type: "KIX" },
+	{ proxyIP: "jp.ipdb.2287405.xyz", type: "NRT" },
+	{ proxyIP: "sg.ipdb.2287405.xyz", type: "SIN" },
+	{ proxyIP: "hk.ipdb.2287405.xyz", type: "TPE" },
+	{ proxyIP: "kr.ipdb.2287405.xyz", type: "ICN" },
+	{ proxyIP: "us.ipdb.2287405.xyz", type: "LAX" },
+	{ proxyIP: "us.ipdb.2287405.xyz", type: "SEA" },
+	{ proxyIP: "us.ipdb.2287405.xyz", type: "SJC" },
+	{ proxyIP: "us.ipdb.2287405.xyz", type: "SFO" },
 ];
 
 const CMproxyIPs = [
-	{ proxyIP: "kr.ipdb.rr.nu", type: "KR" },
-	{ proxyIP: "hk.ipdb.rr.nu", type: "HK" },
-	{ proxyIP: "hk.ipdb.rr.nu", type: "Hong Kong" },
-	{ proxyIP: "jp.ipdb.rr.nu", type: "JP" },
-	{ proxyIP: "jp.ipdb.rr.nu", type: "osaka" },
-	{ proxyIP: "jp.ipdb.rr.nu", type: "tokyo" },
-	{ proxyIP: "sg.ipdb.rr.nu", type: "SG" },
-	{ proxyIP: "hk.ipdb.rr.nu", type: "TW" },
-	{ proxyIP: "hk.ipdb.rr.nu", type: "taipei" },
-	{ proxyIP: "kr.ipdb.rr.nu", type: "KR" },
-	{ proxyIP: "us.ipdb.rr.nu", type: "US" },
-	{ proxyIP: "us.ipdb.rr.nu", type: "Los Angeles" },
-	{ proxyIP: "hk.ipdb.rr.nu", type: "香港" },
-	{ proxyIP: "hk.ipdb.rr.nu", type: "台湾" },
-	{ proxyIP: "jp.ipdb.rr.nu", type: "日本" },
-	{ proxyIP: "jp.ipdb.rr.nu", type: "大阪" },
-	{ proxyIP: "sg.ipdb.rr.nu", type: "狮城" },
-	{ proxyIP: "kr.ipdb.rr.nu", type: "韩国" },
-	{ proxyIP: "kr.ipdb.rr.nu", type: "首尔" },
-	{ proxyIP: "kr.ipdb.rr.nu", type: "春川" },
-	{ proxyIP: "us.ipdb.rr.nu", type: "美国" },
-	{ proxyIP: "us.ipdb.rr.nu", type: "加拿大" },
-	{ proxyIP: "us.ipdb.rr.nu", type: "澳洲" },
-	{ proxyIP: "hk.ipdb.rr.nu", type: "移动" },
-	{ proxyIP: "hk.ipdb.rr.nu", type: "CMCC" },
-	{ proxyIP: "hk.ipdb.rr.nu", type: "联通" },
-	{ proxyIP: "hk.ipdb.rr.nu", type: "CU" },
-	{ proxyIP: "us.ipdb.rr.nu", type: "电信" },
-	{ proxyIP: "us.ipdb.rr.nu", type: "CT" },
-	{ proxyIP: "us.ipdb.rr.nu", type: "洛杉矶" },
-	{ proxyIP: "us.ipdb.rr.nu", type: "CA" },
-	{ proxyIP: "de.ipdb.rr.nu", type: "CH" },
-	{ proxyIP: "de.ipdb.rr.nu", type: "德国" },
-	{ proxyIP: "de.ipdb.rr.nu", type: "瑞典" },
-	{ proxyIP: "nl.ipdb.rr.nu", type: "西班牙" },
-	{ proxyIP: "nl.ipdb.rr.nu", type: "英国" },
+	{ proxyIP: "kr.ipdb.2287405.xyz", type: "KR" },
+	{ proxyIP: "hk.ipdb.2287405.xyz", type: "HK" },
+	{ proxyIP: "hk.ipdb.2287405.xyz", type: "Hong Kong" },
+	{ proxyIP: "jp.ipdb.2287405.xyz", type: "JP" },
+	{ proxyIP: "jp.ipdb.2287405.xyz", type: "osaka" },
+	{ proxyIP: "jp.ipdb.2287405.xyz", type: "tokyo" },
+	{ proxyIP: "sg.ipdb.2287405.xyz", type: "SG" },
+	{ proxyIP: "hk.ipdb.2287405.xyz", type: "TW" },
+	{ proxyIP: "hk.ipdb.2287405.xyz", type: "taipei" },
+	{ proxyIP: "kr.ipdb.2287405.xyz", type: "KR" },
+	{ proxyIP: "us.ipdb.2287405.xyz", type: "US" },
+	{ proxyIP: "us.ipdb.2287405.xyz", type: "Los Angeles" },
+	{ proxyIP: "hk.ipdb.2287405.xyz", type: "香港" },
+	{ proxyIP: "hk.ipdb.2287405.xyz", type: "台湾" },
+	{ proxyIP: "jp.ipdb.2287405.xyz", type: "日本" },
+	{ proxyIP: "jp.ipdb.2287405.xyz", type: "大阪" },
+	{ proxyIP: "sg.ipdb.2287405.xyz", type: "狮城" },
+	{ proxyIP: "kr.ipdb.2287405.xyz", type: "韩国" },
+	{ proxyIP: "kr.ipdb.2287405.xyz", type: "首尔" },
+	{ proxyIP: "kr.ipdb.2287405.xyz", type: "春川" },
+	{ proxyIP: "us.ipdb.2287405.xyz", type: "美国" },
+	{ proxyIP: "us.ipdb.2287405.xyz", type: "加拿大" },
+	{ proxyIP: "us.ipdb.2287405.xyz", type: "澳洲" },
+	{ proxyIP: "hk.ipdb.2287405.xyz", type: "移动" },
+	{ proxyIP: "hk.ipdb.2287405.xyz", type: "CMCC" },
+	{ proxyIP: "hk.ipdb.2287405.xyz", type: "联通" },
+	{ proxyIP: "hk.ipdb.2287405.xyz", type: "CU" },
+	{ proxyIP: "us.ipdb.2287405.xyz", type: "电信" },
+	{ proxyIP: "us.ipdb.2287405.xyz", type: "CT" },
+	{ proxyIP: "us.ipdb.2287405.xyz", type: "洛杉矶" },
+	{ proxyIP: "us.ipdb.2287405.xyz", type: "CA" },
+	{ proxyIP: "de.ipdb.2287405.xyz", type: "CH" },
+	{ proxyIP: "de.ipdb.2287405.xyz", type: "德国" },
+	{ proxyIP: "de.ipdb.2287405.xyz", type: "瑞典" },
+	{ proxyIP: "nl.ipdb.2287405.xyz", type: "西班牙" },
+	{ proxyIP: "nl.ipdb.2287405.xyz", type: "英国" },
 ];
 let BotToken ='';
 let ChatID =''; 
@@ -421,7 +421,7 @@ export default {
 				cfapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=us.ipdb.rr.nu";
+						let path = "/proxyIP=us.ipdb.2287405.xyz";
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
@@ -452,7 +452,7 @@ export default {
 				api.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=us.ipdb.rr.nu";
+						let path = "/proxyIP=us.ipdb.2287405.xyz";
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
@@ -487,7 +487,7 @@ export default {
 				cftapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=us.ipdb.rr.nu";
+						let path = "/proxyIP=us.ipdb.2287405.xyz";
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
@@ -514,7 +514,7 @@ export default {
 				api.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=us.ipdb.rr.nu";
+						let path = "/proxyIP=us.ipdb.2287405.xyz";
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
