@@ -25,7 +25,7 @@ let proxyIPs = [
 	'proxyip.aliyun.fxxk.dedyn.io',
 	'my-telegram-is-herocore.onecf.eu.org',
 ];
-
+let socks5s = [];
 const CFCproxyIPs = [
 	{ proxyIP: "hk.ipdb.2287405.xyz", type: "HKG" },
 	{ proxyIP: "jp.ipdb.2287405.xyz", type: "FUK" },
@@ -253,6 +253,24 @@ export default {
 		subconverter = env.SUBCONVERTER || subconverter;
 		let cfworkerhost = env.CFWORKERHOST || 'test.workers.dev';
 		let cfpagehost = env.CFPAGEHOST || 'test.pages.dev';
+		const cfsocks5address = env.SUB_BUCKET ? await env.SUB_BUCKET.get('socks5') : null;
+		socks5s = [];
+		if (cfsocks5address && cfsocks5address.length > 0) {
+			cfsocks5address.trim().split("\n").map(line => {
+				//console.log(line);
+				try {
+				let obj = JSON.parse(line);
+				socks5s.push(obj);
+				//console.log(obj);
+				} catch (error) {
+				console.error("Error parsing JSON:", error);
+				}
+			});
+		//console.log(cfsocks5address);
+		} else {
+			console.log(cfsocks5address);
+		}
+		//console.log(socks5s);
 
 		if (mytoken !== '' && url.pathname.includes(mytoken)) {
 			host = env.HOST || "edgetunnel-2z2.pages.dev";
@@ -416,12 +434,17 @@ export default {
 				//ipv4或ipv6域名识别
 				const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
 				const cfaddressapi = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cfaddressapi') : null;
-				
+
 				const cfapi = cfaddressapi.split('\n');
 				cfapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
 						let path = "/proxyIP=us.ipdb.2287405.xyz";
+						if(socks5s.length > 0){
+							path = `/socks5=${socks5s[0].socks5}`;
+							//console.log(path);
+						}
+						
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
@@ -456,12 +479,23 @@ export default {
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
-						for (let item of CFCproxyIPs) {
-							if (addressid.includes(item.type)) {
-								path = `/proxyIP=${item.proxyIP}`;
-								break; // 找到匹配项，跳出循环
+						if(socks5s.length > 0){
+							for (let item of socks5s) {
+								if (addressid.includes(item.type)) {
+									path = `/socks5=${item.socks5}`;
+									break; // 找到匹配项，跳出循环
+								}
+							}
+							//console.log(path);
+						}else{
+							for (let item of CFCproxyIPs) {
+								if (addressid.includes(item.type)) {
+									path = `/proxyIP=${item.proxyIP}`;
+									break; // 找到匹配项，跳出循环
+								}
 							}
 						}
+						
 						if (ntlsports.includes(port)){
 							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=${path}#${addressid}`;
 							vlessLinks.push(vlessLink);
@@ -482,6 +516,8 @@ export default {
 				const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
 
 				const cftaddressapi = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cftaddressapi') : null;
+				const cfsocks5address = env.SUB_BUCKET ? await env.SUB_BUCKET.get('socks5') : null;
+				console.log(`socks5的地址：${cfsocks5address}`);
 				
 				const cftapi = cftaddressapi.split('\n');
 				cftapi.map(line => {
@@ -491,10 +527,20 @@ export default {
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
-						for (let item of CFCproxyIPs) {
-							if (addressid.includes(item.type)) {
-								path = `/proxyIP=${item.proxyIP}`;
-								break; // 找到匹配项，跳出循环
+						if(socks5s.length > 0){
+							for (let item of socks5s) {
+								if (addressid.includes(item.type)) {
+									path = `/socks5=${item.socks5}`;
+									break; // 找到匹配项，跳出循环
+								}
+							}
+							//console.log(path);
+						}else{
+							for (let item of CFCproxyIPs) {
+								if (addressid.includes(item.type)) {
+									path = `/proxyIP=${item.proxyIP}`;
+									break; // 找到匹配项，跳出循环
+								}
 							}
 						}
 
@@ -518,10 +564,20 @@ export default {
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
-						for (let item of CFCproxyIPs) {
-							if (addressid.includes(item.type)) {
-								path = `/proxyIP=${item.proxyIP}`;
-								break; // 找到匹配项，跳出循环
+						if(socks5s.length > 0){
+							for (let item of socks5s) {
+								if (addressid.includes(item.type)) {
+									path = `/socks5=${item.socks5}`;
+									break; // 找到匹配项，跳出循环
+								}
+							}
+							//console.log(path);
+						}else{
+							for (let item of CFCproxyIPs) {
+								if (addressid.includes(item.type)) {
+									path = `/proxyIP=${item.proxyIP}`;
+									break; // 找到匹配项，跳出循环
+								}
 							}
 						}
 
@@ -740,25 +796,28 @@ export default {
 				if (edgetunnel.trim() === 'cmliu' && RproxyIP.trim() === 'true') {
 					// 将addressid转换为小写
 					let lowerAddressid = addressid.toLowerCase();
-					// 初始化找到的proxyIP为null
-					let foundProxyIP = null;
-				
-					// 遍历CMproxyIPs数组查找匹配项
-					for (let item of CMproxyIPs) {
-						if (lowerAddressid.includes(item.type.toLowerCase())) {
-							foundProxyIP = item.proxyIP;
-							break; // 找到匹配项，跳出循环
+					// 随机选择一个proxyIP
+					const randomProxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
+					path = `/proxyIP=${randomProxyIP}`;
+
+					if(socks5s.length > 0){
+						for (let item of socks5s) {
+							if (addressid.includes(item.type)) {
+								path = `/socks5=${item.socks5}`;
+								break; // 找到匹配项，跳出循环
+							}
+						}
+						//console.log(path);
+					}else{
+						// 遍历CMproxyIPs数组查找匹配项
+						for (let item of CMproxyIPs) {
+							if (addressid.includes(item.type.toLowerCase())) {
+								path = `/proxyIP=${item.proxyIP}`;
+								break; // 找到匹配项，跳出循环
+							}
 						}
 					}
-				
-					if (foundProxyIP) {
-						// 如果找到匹配的proxyIP，赋值给path
-						path = `/proxyIP=${foundProxyIP}`;
-					} else {
-						// 如果没有找到匹配项，随机选择一个proxyIP
-						const randomProxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
-						path = `/proxyIP=${randomProxyIP}`;
-					}
+					
 				}
 
 				let 伪装域名 = host ;				
