@@ -440,14 +440,30 @@ export default {
 					const match = line.match(addressRegex);
 					if (match){
 						let path = "/proxyIP=us.ipdb.2287405.xyz";
-						if(socks5s.length > 0){
-							path = `/socks5=${socks5s[0].socks5}`;
-							//console.log(path);
-						}
+						// if(socks5s.length > 0){
+						// 	path = `/socks5=${socks5s[0].socks5}`;
+						// 	//console.log(path);
+						// }
 						
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
+						if(socks5s.length > 0){
+							for (let item of socks5s) {
+								if (addressid.includes(item.type)) {
+									path = `/socks5=${item.socks5}`;
+									break; // 找到匹配项，跳出循环
+								}
+							}
+							//console.log(path);
+						}else{
+							for (let item of CFCproxyIPs) {
+								if (addressid.includes(item.type)) {
+									path = `/proxyIP=${item.proxyIP}`;
+									break; // 找到匹配项，跳出循环
+								}
+							}
+						}
 						// for (let item of CFCproxyIPs) {
 						// 	if (addressid.includes(item.type)) {
 						// 		path = `/proxyIP=${item.proxyIP}`;
