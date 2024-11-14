@@ -440,10 +440,10 @@ export default {
 					const match = line.match(addressRegex);
 					if (match){
 						let path = "/proxyIP=us.ipdb.2287405.xyz";
-						// if(socks5s.length > 0){
-						// 	path = `/socks5=${socks5s[0].socks5}`;
-						// 	//console.log(path);
-						// }
+						if(socks5s.length > 0){
+							path = `/socks5=${socks5s[0].socks5}`;
+							//console.log(path);
+						}
 						
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
