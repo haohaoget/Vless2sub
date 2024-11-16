@@ -430,7 +430,63 @@ export default {
 					vlessLinks.push(vlessLink);
 				}
 
-			} else if(url.searchParams.get('client') && (url.searchParams.get('client').includes('cf'))){
+			} else if(url.searchParams.get('client') && (url.searchParams.get('client').includes('cfct'))){
+				//ipv4或ipv6域名识别
+				const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
+				const cfctaddressapi = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cfctaddressapi') : null;
+
+				const cfctapi = cfctaddressapi.split('\n');
+				cfctapi.map(line => {
+					const match = line.match(addressRegex);
+					if (match){
+						let path = "/proxyIP=us.ipdb.2287405.xyz";
+						if(socks5s.length > 0){
+							path = `/socks5://${socks5s[0].socks5}`;
+							//console.log(path);
+						}
+						
+						const [, ipv4OrDomain, ipv6, port, name] = match;
+						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
+						const addressid = name;
+						if(socks5s.length > 0){
+							for (let item of socks5s) {
+								if (addressid.includes(item.type)) {
+									path = `/socks5://${item.socks5}`;
+									break; // 找到匹配项，跳出循环
+								}
+							}
+							//console.log(path);
+						}else{
+							for (let item of CFCproxyIPs) {
+								if (addressid.includes(item.type)) {
+									path = `/proxyIP=${item.proxyIP}`;
+									break; // 找到匹配项，跳出循环
+								}
+							}
+						}
+						// for (let item of CFCproxyIPs) {
+						// 	if (addressid.includes(item.type)) {
+						// 		path = `/proxyIP=${item.proxyIP}`;
+						// 		break; // 找到匹配项，跳出循环
+						// 	}
+						// }
+						if (ntlsports.includes(port)){
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/=2560#${addressid}`;
+							vlessLinks.push(vlessLink);
+						}else{
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=${path}#${addressid}`;
+							vlessLinks.push(vlessLink);
+						}
+						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
+					} else {
+						console.log(`无效的地址：${line}`);
+					}
+				
+				});
+
+				
+				
+			}else if(url.searchParams.get('client') && (url.searchParams.get('client').includes('cf'))){
 				//ipv4或ipv6域名识别
 				const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
 				const cfaddressapi = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cfaddressapi') : null;
@@ -441,7 +497,7 @@ export default {
 					if (match){
 						let path = "/proxyIP=us.ipdb.2287405.xyz";
 						if(socks5s.length > 0){
-							path = `/socks5=${socks5s[0].socks5}`;
+							path = `/socks5://${socks5s[0].socks5}`;
 							//console.log(path);
 						}
 						
@@ -451,7 +507,7 @@ export default {
 						if(socks5s.length > 0){
 							for (let item of socks5s) {
 								if (addressid.includes(item.type)) {
-									path = `/socks5=${item.socks5}`;
+									path = `/socks5://${item.socks5}`;
 									break; // 找到匹配项，跳出循环
 								}
 							}
@@ -498,7 +554,7 @@ export default {
 						if(socks5s.length > 0){
 							for (let item of socks5s) {
 								if (addressid.includes(item.type)) {
-									path = `/socks5=${item.socks5}`;
+									path = `/socks5://${item.socks5}`;
 									break; // 找到匹配项，跳出循环
 								}
 							}
@@ -546,7 +602,7 @@ export default {
 						if(socks5s.length > 0){
 							for (let item of socks5s) {
 								if (addressid.includes(item.type)) {
-									path = `/socks5=${item.socks5}`;
+									path = `/socks5://${item.socks5}`;
 									break; // 找到匹配项，跳出循环
 								}
 							}
@@ -583,7 +639,7 @@ export default {
 						if(socks5s.length > 0){
 							for (let item of socks5s) {
 								if (addressid.includes(item.type)) {
-									path = `/socks5=${item.socks5}`;
+									path = `/socks5://${item.socks5}`;
 									break; // 找到匹配项，跳出循环
 								}
 							}
@@ -817,10 +873,10 @@ export default {
 					path = `/proxyIP=${randomProxyIP}`;
 
 					if(socks5s.length > 0){
-						path = `/socks5=${socks5s[1].socks5}`;
+						path = `/socks5://${socks5s[1].socks5}`;
 						for (let item of socks5s) {
 							if (addressid.includes(item.type)) {
-								path = `/socks5=${item.socks5}`;
+								path = `/socks5://${item.socks5}`;
 								break; // 找到匹配项，跳出循环
 							}
 						}
