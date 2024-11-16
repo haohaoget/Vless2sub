@@ -602,7 +602,7 @@ export default {
 						if(socks5s.length > 0){
 							for (let item of socks5s) {
 								if (addressid.includes(item.type)) {
-									path = `/socks5=${item.socks5}`;
+									path = `/socks5://${item.socks5}`;
 									break; // 找到匹配项，跳出循环
 								}
 							}
@@ -639,7 +639,7 @@ export default {
 						if(socks5s.length > 0){
 							for (let item of socks5s) {
 								if (addressid.includes(item.type)) {
-									path = `/socks5={item.socks5}`;
+									path = `/socks5://{item.socks5}`;
 									break; // 找到匹配项，跳出循环
 								}
 							}
@@ -873,10 +873,10 @@ export default {
 					path = `/proxyIP=${randomProxyIP}`;
 
 					if(socks5s.length > 0){
-						path = `/socks5=${socks5s[1].socks5}`;
+						path = `/socks5://${socks5s[1].socks5}`;
 						for (let item of socks5s) {
 							if (addressid.includes(item.type)) {
-								path = `/socks5=${item.socks5}`;
+								path = `/socks5://${item.socks5}`;
 								break; // 找到匹配项，跳出循环
 							}
 						}
