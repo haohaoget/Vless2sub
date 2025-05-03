@@ -595,9 +595,9 @@ export default {
 						// 	//console.log(path);
 						// }
 						
-						// const [, ipv4OrDomain, ipv6, port, name] = match;
-						// const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
-						// const addressid = name;
+						const [, ipv4OrDomain, ipv6, port, name] = match;
+						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
+						const addressid = name;
 						// if(socks5s.length > 0){
 						// 	for (let item of socks5s) {
 						// 		if (addressid.includes(item.type)) {
