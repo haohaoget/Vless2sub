@@ -204,6 +204,7 @@ export default {
 		subconverter = env.SUBCONVERTER || subconverter;
 		let cfworkerhost = env.CFWORKERHOST || 'test.workers.dev';
 		let cfpagehost = env.CFPAGEHOST || 'test.pages.dev';
+		let bookhost = env.BOOKHOST || cfpagehost;
 		const cfsocks5address = env.SUB_BUCKET ? await env.SUB_BUCKET.get('socks5') : null;
 		socks5s = [];
 		if (cfsocks5address && cfsocks5address.length > 0) {
@@ -418,7 +419,7 @@ export default {
 							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/=2560#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}else{
-							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=${path}#${addressid}`;
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${bookhost}&fp=random&type=ws&host=${bookhost}&path=${path}#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}
 						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
@@ -467,7 +468,7 @@ export default {
 							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/=2560#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}else{
-							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=${path}#${addressid}`;
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${bookhost}&fp=random&type=ws&host=${bookhost}&path=${path}#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}
 						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
@@ -502,7 +503,7 @@ export default {
 							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=${path}#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}else{
-							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=${path}#${addressid}`;
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${bookhost}&fp=random&type=ws&host=${bookhost}&path=${path}#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}
 						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
@@ -579,7 +580,7 @@ export default {
 				
 				});
 			} else if(url.searchParams.get('client') && (url.searchParams.get('client').includes('book'))){
-				const bookhost = env.BOOKHOST || cfpagehost;
+				
 				//ipv4或ipv6域名识别
 				const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
 				const bookaddressapi = env.SUB_BUCKET ? await env.SUB_BUCKET.get('addressapi') : null;
