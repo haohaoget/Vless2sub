@@ -22,63 +22,14 @@ let link = '';
 let edgetunnel = 'ed';
 let RproxyIP = 'false';
 let proxyIPs = [
-	'proxyip.aliyun.fxxk.dedyn.io',
+	'ProxyIP.US.CMLiussss.net',
+	'ProxyIP.KR.CMLiussss.net',
+	'ProxyIP.Aliyun.CMLiussss.net',
+	'ProxyIP.JP.CMLiussss.net',
 	'my-telegram-is-herocore.onecf.eu.org',
 ];
 let socks5s = [];
-const CFCproxyIPs = [
-	{ proxyIP: "hk.ipdb.2287405.xyz", type: "HKG" },
-	{ proxyIP: "jp.ipdb.2287405.xyz", type: "FUK" },
-	{ proxyIP: "jp.ipdb.2287405.xyz", type: "OKA" },
-	{ proxyIP: "jp.ipdb.2287405.xyz", type: "KIX" },
-	{ proxyIP: "jp.ipdb.2287405.xyz", type: "NRT" },
-	{ proxyIP: "sg.ipdb.2287405.xyz", type: "SIN" },
-	{ proxyIP: "hk.ipdb.2287405.xyz", type: "TPE" },
-	{ proxyIP: "kr.ipdb.2287405.xyz", type: "ICN" },
-	{ proxyIP: "us.ipdb.2287405.xyz", type: "LAX" },
-	{ proxyIP: "us.ipdb.2287405.xyz", type: "SEA" },
-	{ proxyIP: "us.ipdb.2287405.xyz", type: "SJC" },
-	{ proxyIP: "us.ipdb.2287405.xyz", type: "SFO" },
-];
 
-const CMproxyIPs = [
-	{ proxyIP: "kr.ipdb.2287405.xyz", type: "KR" },
-	{ proxyIP: "hk.ipdb.2287405.xyz", type: "HK" },
-	{ proxyIP: "hk.ipdb.2287405.xyz", type: "Hong Kong" },
-	{ proxyIP: "jp.ipdb.2287405.xyz", type: "JP" },
-	{ proxyIP: "jp.ipdb.2287405.xyz", type: "osaka" },
-	{ proxyIP: "jp.ipdb.2287405.xyz", type: "tokyo" },
-	{ proxyIP: "sg.ipdb.2287405.xyz", type: "SG" },
-	{ proxyIP: "hk.ipdb.2287405.xyz", type: "TW" },
-	{ proxyIP: "hk.ipdb.2287405.xyz", type: "taipei" },
-	{ proxyIP: "kr.ipdb.2287405.xyz", type: "KR" },
-	{ proxyIP: "us.ipdb.2287405.xyz", type: "US" },
-	{ proxyIP: "us.ipdb.2287405.xyz", type: "Los Angeles" },
-	{ proxyIP: "hk.ipdb.2287405.xyz", type: "香港" },
-	{ proxyIP: "hk.ipdb.2287405.xyz", type: "台湾" },
-	{ proxyIP: "jp.ipdb.2287405.xyz", type: "日本" },
-	{ proxyIP: "jp.ipdb.2287405.xyz", type: "大阪" },
-	{ proxyIP: "sg.ipdb.2287405.xyz", type: "狮城" },
-	{ proxyIP: "kr.ipdb.2287405.xyz", type: "韩国" },
-	{ proxyIP: "kr.ipdb.2287405.xyz", type: "首尔" },
-	{ proxyIP: "kr.ipdb.2287405.xyz", type: "春川" },
-	{ proxyIP: "us.ipdb.2287405.xyz", type: "美国" },
-	{ proxyIP: "us.ipdb.2287405.xyz", type: "加拿大" },
-	{ proxyIP: "us.ipdb.2287405.xyz", type: "澳洲" },
-	{ proxyIP: "hk.ipdb.2287405.xyz", type: "移动" },
-	{ proxyIP: "hk.ipdb.2287405.xyz", type: "CMCC" },
-	{ proxyIP: "hk.ipdb.2287405.xyz", type: "联通" },
-	{ proxyIP: "hk.ipdb.2287405.xyz", type: "CU" },
-	{ proxyIP: "us.ipdb.2287405.xyz", type: "电信" },
-	{ proxyIP: "us.ipdb.2287405.xyz", type: "CT" },
-	{ proxyIP: "us.ipdb.2287405.xyz", type: "洛杉矶" },
-	{ proxyIP: "us.ipdb.2287405.xyz", type: "CA" },
-	{ proxyIP: "de.ipdb.2287405.xyz", type: "CH" },
-	{ proxyIP: "de.ipdb.2287405.xyz", type: "德国" },
-	{ proxyIP: "de.ipdb.2287405.xyz", type: "瑞典" },
-	{ proxyIP: "nl.ipdb.2287405.xyz", type: "西班牙" },
-	{ proxyIP: "nl.ipdb.2287405.xyz", type: "英国" },
-];
 let BotToken ='';
 let ChatID =''; 
 let proxyhosts = [//本地代理域名池
@@ -439,7 +390,7 @@ export default {
 				cfctapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=us.ipdb.2287405.xyz";
+						let path = "/proxyIP=ProxyIP.US.CMLiussss.net";
 						if(socks5s.length > 0){
 							path = `/socks5://${socks5s[0].socks5}`;
 							//console.log(path);
@@ -456,13 +407,6 @@ export default {
 								}
 							}
 							//console.log(path);
-						}else{
-							for (let item of CFCproxyIPs) {
-								if (addressid.includes(item.type)) {
-									path = `/proxyIP=${item.proxyIP}`;
-									break; // 找到匹配项，跳出循环
-								}
-							}
 						}
 						// for (let item of CFCproxyIPs) {
 						// 	if (addressid.includes(item.type)) {
@@ -495,7 +439,7 @@ export default {
 				cfapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=us.ipdb.2287405.xyz";
+						let path = "/proxyIP=ProxyIP.US.CMLiussss.net";
 						if(socks5s.length > 0){
 							path = `/socks5://${socks5s[0].socks5}`;
 							//console.log(path);
@@ -512,13 +456,6 @@ export default {
 								}
 							}
 							//console.log(path);
-						}else{
-							for (let item of CFCproxyIPs) {
-								if (addressid.includes(item.type)) {
-									path = `/proxyIP=${item.proxyIP}`;
-									break; // 找到匹配项，跳出循环
-								}
-							}
 						}
 						// for (let item of CFCproxyIPs) {
 						// 	if (addressid.includes(item.type)) {
@@ -547,7 +484,7 @@ export default {
 				api.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=us.ipdb.2287405.xyz";
+						let path = "/proxyIP=ProxyIP.US.CMLiussss.net";
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
@@ -559,13 +496,6 @@ export default {
 								}
 							}
 							//console.log(path);
-						}else{
-							for (let item of CFCproxyIPs) {
-								if (addressid.includes(item.type)) {
-									path = `/proxyIP=${item.proxyIP}`;
-									break; // 找到匹配项，跳出循环
-								}
-							}
 						}
 						
 						if (ntlsports.includes(port)){
@@ -588,14 +518,14 @@ export default {
 				const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
 
 				const cftaddressapi = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cftaddressapi') : null;
-				const cfsocks5address = env.SUB_BUCKET ? await env.SUB_BUCKET.get('socks5') : null;
-				console.log(`socks5的地址：${cfsocks5address}`);
+				// const cfsocks5address = env.SUB_BUCKET ? await env.SUB_BUCKET.get('socks5') : null;
+				// console.log(`socks5的地址：${cfsocks5address}`);
 				
 				const cftapi = cftaddressapi.split('\n');
 				cftapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=us.ipdb.2287405.xyz";
+						let path = "/proxyIP=ProxyIP.US.CMLiussss.net";
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
@@ -607,13 +537,6 @@ export default {
 								}
 							}
 							//console.log(path);
-						}else{
-							for (let item of CFCproxyIPs) {
-								if (addressid.includes(item.type)) {
-									path = `/proxyIP=${item.proxyIP}`;
-									break; // 找到匹配项，跳出循环
-								}
-							}
 						}
 
 						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfhostt}&fp=random&type=ws&host=${cfhostt}&path=${path}#${addressid}`;
@@ -632,7 +555,7 @@ export default {
 				api.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=us.ipdb.2287405.xyz";
+						let path = "/proxyIP=ProxyIP.US.CMLiussss.net";
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
@@ -644,13 +567,6 @@ export default {
 								}
 							}
 							//console.log(path);
-						}else{
-							for (let item of CFCproxyIPs) {
-								if (addressid.includes(item.type)) {
-									path = `/proxyIP=${item.proxyIP}`;
-									break; // 找到匹配项，跳出循环
-								}
-							}
 						}
 
 						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfhostt}&fp=random&type=ws&host=${cfhostt}&path=${path}#${addressid}`;
@@ -662,7 +578,87 @@ export default {
 					}
 				
 				});
-			} else {
+			} else if(url.searchParams.get('client') && (url.searchParams.get('client').includes('book'))){
+				const bookhost = env.BOOKHOST || cfpagehost;
+				//ipv4或ipv6域名识别
+				const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
+				const bookaddressapi = env.SUB_BUCKET ? await env.SUB_BUCKET.get('addressapi') : null;
+
+				const bookapi = bookaddressapi.split('\n');
+				bookapi.map(line => {
+					const match = line.match(addressRegex);
+					if (match){
+						let path = "/?ed=2560";
+						// let path = "/proxyIP=ProxyIP.US.CMLiussss.net";
+						// if(socks5s.length > 0){
+						// 	path = `/socks5://${socks5s[0].socks5}`;
+						// 	//console.log(path);
+						// }
+						
+						// const [, ipv4OrDomain, ipv6, port, name] = match;
+						// const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
+						// const addressid = name;
+						// if(socks5s.length > 0){
+						// 	for (let item of socks5s) {
+						// 		if (addressid.includes(item.type)) {
+						// 			path = `/socks5://${item.socks5}`;
+						// 			break; // 找到匹配项，跳出循环
+						// 		}
+						// 	}
+						// 	//console.log(path);
+						// }
+						// for (let item of CFCproxyIPs) {
+						// 	if (addressid.includes(item.type)) {
+						// 		path = `/proxyIP=${item.proxyIP}`;
+						// 		break; // 找到匹配项，跳出循环
+						// 	}
+						// }
+
+						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${bookhost}&fp=random&type=ws&host=${bookhost}&path=${path}#${addressid}`;
+						vlessLinks.push(vlessLink);
+						// console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
+					} else {
+						console.log(`无效的地址：${line}`);
+					}
+				
+				});
+
+				
+				const cf_api = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cf_api') : null;
+				
+				const api = cf_api.split('\n');
+				api.map(line => {
+					const match = line.match(addressRegex);
+					if (match){
+						let path = "/proxyIP=ProxyIP.US.CMLiussss.net";
+						const [, ipv4OrDomain, ipv6, port, name] = match;
+						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
+						const addressid = name;
+						if(socks5s.length > 0){
+							for (let item of socks5s) {
+								if (addressid.includes(item.type)) {
+									path = `/socks5://${item.socks5}`;
+									break; // 找到匹配项，跳出循环
+								}
+							}
+							//console.log(path);
+						}
+						
+						if (ntlsports.includes(port)){
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=${path}#${addressid}`;
+							vlessLinks.push(vlessLink);
+						}else{
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfpagehost}&fp=random&type=ws&host=${cfpagehost}&path=${path}#${addressid}`;
+							vlessLinks.push(vlessLink);
+						}
+						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
+					} else {
+						console.log(`无效的地址：${line}`);
+					}
+				
+				});
+				
+			}else {
 				// Generate vlessLinks for ntlsports
 				for (let i = 0; i < ntlsports.length; i++) {
 					const port = ntlsports[i];
@@ -881,14 +877,6 @@ export default {
 							}
 						}
 						//console.log(path);
-					}else{
-						// 遍历CMproxyIPs数组查找匹配项
-						for (let item of CMproxyIPs) {
-							if (addressid.includes(item.type.toLowerCase())) {
-								path = `/proxyIP=${item.proxyIP}`;
-								break; // 找到匹配项，跳出循环
-							}
-						}
 					}
 					
 				}
