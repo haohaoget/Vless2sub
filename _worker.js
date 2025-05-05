@@ -391,9 +391,9 @@ export default {
 				cfctapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=ProxyIP.US.CMLiussss.net?ed=2560";
+						let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
 						if(socks5s.length > 0){
-							path = `/socks5=${socks5s[0].socks5}?ed=2560`;
+							path = `/?ed=2560&socks5=${socks5s[0].socks5}`;
 							//console.log(path);
 						}
 						
@@ -403,7 +403,7 @@ export default {
 						if(socks5s.length > 0){
 							for (let item of socks5s) {
 								if (addressid.includes(item.type)) {
-									path = `/socks5=${item.socks5}?ed=2560`;
+									path = `/?ed=2560&socks5=${item.socks5}`;
 									break; // 找到匹配项，跳出循环
 								}
 							}
@@ -415,6 +415,7 @@ export default {
 						// 		break; // 找到匹配项，跳出循环
 						// 	}
 						// }
+						path = encodeURIComponent(path);
 						if (ntlsports.includes(port)){
 							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/?=2560#${addressid}`;
 							vlessLinks.push(vlessLink);
@@ -440,9 +441,9 @@ export default {
 				cfapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=ProxyIP.US.CMLiussss.net?ed=2560";
+						let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
 						if(socks5s.length > 0){
-							path = `/socks5=${socks5s[0].socks5}?ed=2560`;
+							path = `/?ed=2560&socks5=${socks5s[0].socks5}`;
 							//console.log(path);
 						}
 						
@@ -452,7 +453,7 @@ export default {
 						if(socks5s.length > 0){
 							for (let item of socks5s) {
 								if (addressid.includes(item.type)) {
-									path = `/socks5=${item.socks5}?ed=2560`;
+									path = `/?ed=2560&socks5=${item.socks5}`;
 									break; // 找到匹配项，跳出循环
 								}
 							}
@@ -464,6 +465,7 @@ export default {
 						// 		break; // 找到匹配项，跳出循环
 						// 	}
 						// }
+						path = encodeURIComponent(path);
 						if (ntlsports.includes(port)){
 							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/?=2560#${addressid}`;
 							vlessLinks.push(vlessLink);
@@ -485,20 +487,20 @@ export default {
 				api.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=ProxyIP.US.CMLiussss.net?ed=2560";
+						let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
 						if(socks5s.length > 0){
 							for (let item of socks5s) {
 								if (addressid.includes(item.type)) {
-									path = `/socks5=${item.socks5}?ed=2560`;
+									path = `/?ed=2560&socks5=${item.socks5}`;
 									break; // 找到匹配项，跳出循环
 								}
 							}
 							//console.log(path);
 						}
-						
+						path = encodeURIComponent(path);
 						if (ntlsports.includes(port)){
 							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=${path}#${addressid}`;
 							vlessLinks.push(vlessLink);
@@ -526,20 +528,20 @@ export default {
 				cftapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=ProxyIP.US.CMLiussss.net";
+						let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
 						if(socks5s.length > 0){
 							for (let item of socks5s) {
 								if (addressid.includes(item.type)) {
-									path = `/socks5=${item.socks5}`;
+									path = `/?ed=2560&socks5=${item.socks5}`;
 									break; // 找到匹配项，跳出循环
 								}
 							}
 							//console.log(path);
 						}
-
+						path = encodeURIComponent(path);
 						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfhostt}&fp=random&type=ws&host=${cfhostt}&path=${path}#${addressid}`;
 						vlessLinks.push(vlessLink);
 						
@@ -556,20 +558,20 @@ export default {
 				api.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=ProxyIP.US.CMLiussss.net";
+						let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
 						if(socks5s.length > 0){
 							for (let item of socks5s) {
 								if (addressid.includes(item.type)) {
-									path = `/socks5={item.socks5}`;
+									path = `/?ed=2560&socks5={item.socks5}`;
 									break; // 找到匹配项，跳出循环
 								}
 							}
 							//console.log(path);
 						}
-
+						path = encodeURIComponent(path);
 						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfhostt}&fp=random&type=ws&host=${cfhostt}&path=${path}#${addressid}`;
 						vlessLinks.push(vlessLink);
 
@@ -589,9 +591,9 @@ export default {
 				bookapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = "/proxyIP=ProxyIP.US.CMLiussss.net?ed=2560";
+						let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
 						if(socks5s.length > 0){
-							path = `/socks5=${socks5s[0].socks5}?ed=2560`;
+							path = `/?ed=2560&socks5=${socks5s[0].socks5}`;
 							//console.log(path);
 						}
 						
@@ -601,7 +603,7 @@ export default {
 						if(socks5s.length > 0){
 							for (let item of socks5s) {
 								if (addressid.includes(item.type)) {
-									path = `/socks5=${item.socks5}?ed=2560`;
+									path = `/?ed=2560&socks5=${item.socks5}`;
 									break; // 找到匹配项，跳出循环
 								}
 							}
@@ -613,7 +615,7 @@ export default {
 						// 		break; // 找到匹配项，跳出循环
 						// 	}
 						// }
-
+						path = encodeURIComponent(path);
 						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${bookhost}&fp=random&type=ws&host=${bookhost}&path=${path}#${addressid}`;
 						vlessLinks.push(vlessLink);
 						// console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
