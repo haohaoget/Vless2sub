@@ -397,7 +397,7 @@ export default {
 						
 						// let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
 						let path = "/?ed=2560";
-						let hostbook = `${socks5s[0].socks5}`
+						let hostbook = `${socks5s[2].socks5}`
 						if(socks5s.length > 0){
 							
 							// path = `/?ed=2560&socks5=${socks5s[0].socks5}`;
@@ -449,7 +449,7 @@ export default {
 
 						// let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
 						let path = "/?ed=2560";
-						let hostbook = `${socks5s[0].socks5}`
+						let hostbook = `${socks5s[2].socks5}`
 						if(socks5s.length > 0){
 
 							// path = `/?ed=2560&socks5=${socks5s[0].socks5}`;
@@ -602,7 +602,7 @@ export default {
 						
 						// let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
 						let path = "/?ed=2560";
-						let hostbook = `${socks5s[0].socks5}`
+						let hostbook = `${socks5s[2].socks5}`
 						if(socks5s.length > 0){
 							// path = `/?ed=2560&socks5=${socks5s[0].socks5}`;
 							for (let item of socks5s) {
