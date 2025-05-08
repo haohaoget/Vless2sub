@@ -391,6 +391,10 @@ export default {
 				cfctapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
+						const [, ipv4OrDomain, ipv6, port, name] = match;
+						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
+						const addressid = name;
+						
 						// let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
 						let path = "/?ed=2560";
 						let hostbook = `${socks5s[0].socks5}`
@@ -406,10 +410,6 @@ export default {
 							}
 							//console.log(path);
 						}
-						
-						const [, ipv4OrDomain, ipv6, port, name] = match;
-						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
-						const addressid = name;
 						
 						// for (let item of CFCproxyIPs) {
 						// 	if (addressid.includes(item.type)) {
@@ -443,6 +443,10 @@ export default {
 				cfapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
+						const [, ipv4OrDomain, ipv6, port, name] = match;
+						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
+						const addressid = name;
+
 						// let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
 						let path = "/?ed=2560";
 						let hostbook = `${socks5s[0].socks5}`
@@ -459,10 +463,7 @@ export default {
 							//console.log(path);
 						}
 						
-						const [, ipv4OrDomain, ipv6, port, name] = match;
-						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
-						const addressid = name;
-
+						
 						// for (let item of CFCproxyIPs) {
 						// 	if (addressid.includes(item.type)) {
 						// 		path = `/proxyIP=${item.proxyIP}`;
@@ -595,6 +596,10 @@ export default {
 				bookapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
+						const [, ipv4OrDomain, ipv6, port, name] = match;
+						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
+						const addressid = name;
+						
 						// let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
 						let path = "/?ed=2560";
 						let hostbook = `${socks5s[0].socks5}`
@@ -610,9 +615,7 @@ export default {
 							//console.log(path);
 						}
 						
-						const [, ipv4OrDomain, ipv6, port, name] = match;
-						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
-						const addressid = name;
+						
 						// if(socks5s.length > 0){
 						// 	for (let item of socks5s) {
 						// 		if (addressid.includes(item.type)) {
