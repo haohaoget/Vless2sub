@@ -533,7 +533,7 @@ export default {
 				cftapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = `/?ed=2560&socks5=${socks5s[1].socks5}`;
+						let path = `/?ed=2560`;
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
