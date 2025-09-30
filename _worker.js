@@ -396,14 +396,16 @@ export default {
 						const addressid = name;
 						
 						// let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
-						let path = "/?ed=2560";
-						let hostbook = `${socks5s[2].socks5}`
+						let encryption = `${socks5s[2].encryption}`;
+						let path = `/${socks5s[2].path}?ed=2560`;
+						let hostbook = `${socks5s[2].socks5}`;
 						if(socks5s.length > 0){
 							
 							// path = `/?ed=2560&socks5=${socks5s[0].socks5}`;
 							for (let item of socks5s) {
 								if (addressid.includes(item.type)) {
 									hostbook = `${item.socks5}`;
+
 									// path = `/?ed=2560&socks5=${item.socks5}`;
 									break; // 找到匹配项，跳出循环
 								}
@@ -422,7 +424,7 @@ export default {
 							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/?=2560#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}else{
-							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${hostbook}&fp=random&type=ws&host=${hostbook}&path=${path}#${addressid}`;
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${hostbook}&fp=chrome&type=ws&path=${path}#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}
 						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
@@ -448,7 +450,8 @@ export default {
 						const addressid = name;
 
 						// let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
-						let path = "/?ed=2560";
+						let encryption = `${socks5s[2].encryption}`;
+						let path = `/${socks5s[2].path}?ed=2560`;
 						let hostbook = `${socks5s[2].socks5}`
 						if(socks5s.length > 0){
 
@@ -475,7 +478,7 @@ export default {
 							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/?=2560#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}else{
-							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${hostbook}&fp=random&type=ws&host=${hostbook}&path=${path}#${addressid}`;
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${hostbook}&fp=chrome&type=ws&path=${path}#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}
 						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
@@ -533,7 +536,8 @@ export default {
 				cftapi.map(line => {
 					const match = line.match(addressRegex);
 					if (match){
-						let path = `/?ed=2560`;
+						let encryption = `${socks5s[2].encryption}`;
+						let path = `/${socks5s[2].path}?ed=2560`;
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
@@ -547,7 +551,7 @@ export default {
 						// 	//console.log(path);
 						// }
 						path = encodeURIComponent(path);
-						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${cfhostt}&fp=random&type=ws&host=${cfhostt}&path=${path}#${addressid}`;
+						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${cfhostt}&fp=chrome&type=ws&path=${path}#${addressid}`;
 						vlessLinks.push(vlessLink);
 						
 						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
@@ -601,7 +605,8 @@ export default {
 						const addressid = name;
 						
 						// let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
-						let path = "/?ed=2560";
+						let encryption = `${socks5s[2].encryption}`;
+						let path = `/${socks5s[2].path}?ed=2560`;
 						let hostbook = `${socks5s[2].socks5}`
 						if(socks5s.length > 0){
 							// path = `/?ed=2560&socks5=${socks5s[0].socks5}`;
@@ -632,7 +637,7 @@ export default {
 						// 	}
 						// }
 						path = encodeURIComponent(path);
-						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&security=tls&sni=${hostbook}&fp=random&type=ws&host=${hostbook}&path=${path}#${addressid}`;
+						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${hostbook}&fp=chrome&type=ws&path=${path}#${addressid}`;
 						vlessLinks.push(vlessLink);
 						// console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
 					} else {
