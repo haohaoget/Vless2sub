@@ -424,7 +424,7 @@ export default {
 							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/?=2560#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}else{
-							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${hostbook}&fp=chrome&type=ws&host=${hostbook}&path=${path}#${addressid}`;
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${hostbook}&fp=firefox&type=ws&host=${hostbook}&path=${path}#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}
 						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
@@ -478,7 +478,7 @@ export default {
 							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/?=2560#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}else{
-							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${hostbook}&fp=chrome&type=ws&host=${hostbook}&path=${path}#${addressid}`;
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${hostbook}&fp=firefox&type=ws&host=${hostbook}&path=${path}#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}
 						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
@@ -551,7 +551,7 @@ export default {
 						// 	//console.log(path);
 						// }
 						path = encodeURIComponent(path);
-						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${cfhostt}&fp=chrome&type=ws&host=${cfhostt}&path=${path}#${addressid}`;
+						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${cfhostt}&fp=firefox&type=ws&host=${cfhostt}&path=${path}#${addressid}`;
 						vlessLinks.push(vlessLink);
 						
 						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
@@ -637,7 +637,7 @@ export default {
 						// 	}
 						// }
 						path = encodeURIComponent(path);
-						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${hostbook}&fp=chrome&type=ws&host=${hostbook}&path=${path}#${addressid}`;
+						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${hostbook}&fp=firefox&type=ws&host=${hostbook}&path=${path}#${addressid}`;
 						vlessLinks.push(vlessLink);
 						// console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
 					} else {
