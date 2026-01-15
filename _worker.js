@@ -382,7 +382,7 @@ export default {
 					vlessLinks.push(vlessLink);
 				}
 
-			} else if(url.searchParams.get('client') && (url.searchParams.get('client').includes('cloudfrontct'))){
+			} else if(url.searchParams.get('client') && (url.searchParams.get('client').includes('cfct'))){
 				//ipv4或ipv6域名识别
 				const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
 				const cfctaddressapi = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cfctaddressapi') : null;
@@ -523,7 +523,7 @@ export default {
 				
 				// });
 				
-			}else if(url.searchParams.get('client') && (url.searchParams.get('client').includes('cftct'))){
+			}else if(url.searchParams.get('client') && (url.searchParams.get('client').includes('cloudfrontct'))){
 				const cfhostt = env.CFHOSTT || cfpagehost;
 				///ipv4或ipv6域名识别
 				const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
