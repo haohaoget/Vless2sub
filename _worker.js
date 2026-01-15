@@ -523,6 +523,44 @@ export default {
 				
 				// });
 				
+			}else if(url.searchParams.get('client') && (url.searchParams.get('client').includes('cftct'))){
+				const cfhostt = env.CFHOSTT || cfpagehost;
+				///ipv4或ipv6域名识别
+				const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
+
+				const cftctaddressapi = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cftctaddressapi') : null;
+				// const cfsocks5address = env.SUB_BUCKET ? await env.SUB_BUCKET.get('socks5') : null;
+				// console.log(`socks5的地址：${cfsocks5address}`);
+				
+				const cftctapi = cftctaddressapi.split('\n');
+				cftctapi.map(line => {
+					const match = line.match(addressRegex);
+					if (match){
+						let encryption = `${socks5s[2].encryption}`;
+						let path = `/${socks5s[2].path}?ed=2560`;
+						const [, ipv4OrDomain, ipv6, port, name] = match;
+						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
+						const addressid = name;
+						// if(socks5s.length > 0){
+						// 	for (let item of socks5s) {
+						// 		if (addressid.includes(item.type)) {
+						// 			path = `/?ed=2560&socks5=${item.socks5}`;
+						// 			break; // 找到匹配项，跳出循环
+						// 		}
+						// 	}
+						// 	//console.log(path);
+						// }
+						path = encodeURIComponent(path);
+						const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${cfhostt}&fp=firefox&type=ws&host=${cfhostt}&path=${path}#${addressid}`;
+						vlessLinks.push(vlessLink);
+						
+						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
+					} else {
+						console.log(`无效的地址：${line}`);
+					}
+				
+				});
+				
 			}else if(url.searchParams.get('client') && (url.searchParams.get('client').includes('cloudfront'))){
 				const cfhostt = env.CFHOSTT || cfpagehost;
 				///ipv4或ipv6域名识别
