@@ -424,7 +424,7 @@ export default {
 							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/?=2560#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}else{
-							const vlessLink = `vless:${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${hostbook}&fp=firefox&alpn=h2&insecure=0&allowInsecure=0&ech=gitlab.io+https://223.5.5.5/dns-query&type=xhttp&host=${hostbook}&path=${path}&mode=auto&extra={"xPaddingObfsMode":true,"xPaddingKey":"x_padding","xPaddingHeader":"Referer","xPaddingPlacement":"queryInHeader","xPaddingMethod":"tokenish","xmux":{"maxConcurrency":"16-32","cMaxReuseTimes":0,"hMaxReusableSecs":"1800-3000","hKeepAlivePeriod":0}}#${addressid}`;
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${hostbook}&fp=firefox&alpn=h2&insecure=0&allowInsecure=0&ech=gitlab.io+https://223.5.5.5/dns-query&type=xhttp&host=${hostbook}&path=${path}&mode=auto&extra={"xPaddingObfsMode":true,"xPaddingKey":"x_padding","xPaddingHeader":"Referer","xPaddingPlacement":"queryInHeader","xPaddingMethod":"tokenish","xmux":{"maxConcurrency":"16-32","cMaxReuseTimes":0,"hMaxReusableSecs":"1800-3000","hKeepAlivePeriod":0}}#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}
 						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
@@ -478,7 +478,7 @@ export default {
 							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=none&flow=&security=none&fp=random&type=ws&host=${host}&path=/?=2560#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}else{
-							const vlessLink = `vless:${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${hostbook}&fp=firefox&alpn=h2&insecure=0&allowInsecure=0&ech=gitlab.io+https://223.5.5.5/dns-query&type=xhttp&host=${hostbook}&path=${path}&mode=auto&extra={"xPaddingObfsMode":true,"xPaddingKey":"x_padding","xPaddingHeader":"Referer","xPaddingPlacement":"queryInHeader","xPaddingMethod":"tokenish","xmux":{"maxConcurrency":"16-32","cMaxReuseTimes":0,"hMaxReusableSecs":"1800-3000","hKeepAlivePeriod":0}}#${addressid}`;
+							const vlessLink = `vless://${uuid}@${ipOrDomain}:${port}?encryption=${encryption}&security=tls&sni=${hostbook}&fp=firefox&alpn=h2&insecure=0&allowInsecure=0&ech=gitlab.io+https://223.5.5.5/dns-query&type=xhttp&host=${hostbook}&path=${path}&mode=auto&extra={"xPaddingObfsMode":true,"xPaddingKey":"x_padding","xPaddingHeader":"Referer","xPaddingPlacement":"queryInHeader","xPaddingMethod":"tokenish","xmux":{"maxConcurrency":"16-32","cMaxReuseTimes":0,"hMaxReusableSecs":"1800-3000","hKeepAlivePeriod":0}}#${addressid}`;
 							vlessLinks.push(vlessLink);
 						}
 						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
