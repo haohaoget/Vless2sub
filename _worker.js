@@ -397,7 +397,7 @@ export default {
 						
 						// let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
 						let encryption = `${socks5s[2].encryption}`;
-						let path = `/${socks5s[2].path}?ed=2560`;
+						let path = `/${socks5s[2].path}`;
 						let hostbook = `${socks5s[2].socks5}`;
 						if(socks5s.length > 0){
 							
@@ -451,7 +451,7 @@ export default {
 
 						// let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
 						let encryption = `${socks5s[2].encryption}`;
-						let path = `/${socks5s[2].path}?ed=2560`;
+						let path = `/${socks5s[2].path}`;
 						let hostbook = `${socks5s[2].socks5}`
 						if(socks5s.length > 0){
 
@@ -538,7 +538,7 @@ export default {
 					const match = line.match(addressRegex);
 					if (match){
 						let encryption = `${socks5s[2].encryption}`;
-						let path = `/${socks5s[2].path}?ed=2560`;
+						let path = `/${socks5s[2].path}`;
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
@@ -577,7 +577,7 @@ export default {
 					const match = line.match(addressRegex);
 					if (match){
 						let encryption = `${socks5s[2].encryption}`;
-						let path = `/${socks5s[2].path}?ed=2560`;
+						let path = `/${socks5s[2].path}`;
 						const [, ipv4OrDomain, ipv6, port, name] = match;
 						const ipOrDomain = ipv6 ? `[${ipv6}]` : ipv4OrDomain;
 						const addressid = name;
@@ -646,7 +646,7 @@ export default {
 						
 						// let path = "/?ed=2560&proxyIP=ProxyIP.US.CMLiussss.net";
 						let encryption = `${socks5s[2].encryption}`;
-						let path = `/${socks5s[2].path}?ed=2560`;
+						let path = `/${socks5s[2].path}`;
 						let hostbook = `${socks5s[2].socks5}`
 						if(socks5s.length > 0){
 							// path = `/?ed=2560&socks5=${socks5s[0].socks5}`;
