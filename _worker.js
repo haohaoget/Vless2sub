@@ -528,6 +528,11 @@ export default {
 				let hostbook = `${socks5s[2].socks5}`;
 				///ipv4或ipv6域名识别
 				const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
+				const cfaddressapi = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cfctaddressapi') : null;
+				const cfapi = cfaddressapi.split('\n');
+				const cfmatch = cfapi[0].trim().match(addressRegex);
+				const [, cfipv4OrDomain, cfipv6, cfport, cfname] = cfmatch;
+				const cfipOrDomain = cfipv6 ? `[${cfipv6}]` : cfipv4OrDomain;
 
 				const cftctaddressapi = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cftctaddressapi') : null;
 				// const cfsocks5address = env.SUB_BUCKET ? await env.SUB_BUCKET.get('socks5') : null;
@@ -552,7 +557,7 @@ export default {
 						// 	//console.log(path);
 						// }
 						path = encodeURIComponent(path);
-						const vlessLink = `vless://${uuid}@freeyx.cloudflare88.eu.org:443?encryption=${encryption}&security=tls&sni=${hostbook}&fp=chrome&alpn=h2&insecure=0&allowInsecure=0&ech=gitlab.io+https://223.5.5.5/dns-query&type=xhttp&host=${hostbook}&path=${path}&mode=auto&extra={"xPaddingObfsMode":true,"xPaddingKey":"x_padding","xPaddingHeader":"Referer","xPaddingPlacement":"queryInHeader","xPaddingMethod":"tokenish","xmux":{"maxConcurrency":"16-32","cMaxReuseTimes":0,"hMaxReusableSecs":"1800-3000","hKeepAlivePeriod":0},"downloadSettings":{"address":"${ipOrDomain}","port":${port},"network":"xhttp","security":"tls","tlsSettings":{"serverName":"${cfhostt}","allowInsecure":false,"alpn":["h2"],"fingerprint":"firefox"},"xhttpSettings":{"host":"${cfhostt}","path":"${path}","mode":"auto","extra":{"xPaddingObfsMode":true,"xPaddingKey":"x_padding","xPaddingHeader":"Referer","xPaddingPlacement":"queryInHeader","xPaddingMethod":"tokenish","xmux":{"maxConcurrency":"16-32","cMaxReuseTimes":0,"hMaxReusableSecs":"1800-3000","hKeepAlivePeriod":0}}}}}#${addressid}`;
+						const vlessLink = `vless://${uuid}@${cfipOrDomain}:${cfport}?encryption=${encryption}&security=tls&sni=${hostbook}&fp=chrome&alpn=h2&insecure=0&allowInsecure=0&ech=gitlab.io+https://223.5.5.5/dns-query&type=xhttp&host=${hostbook}&path=${path}&mode=auto&extra={"xPaddingObfsMode":true,"xPaddingKey":"x_padding","xPaddingHeader":"Referer","xPaddingPlacement":"queryInHeader","xPaddingMethod":"tokenish","xmux":{"maxConcurrency":"16-32","cMaxReuseTimes":0,"hMaxReusableSecs":"1800-3000","hKeepAlivePeriod":0},"downloadSettings":{"address":"${ipOrDomain}","port":${port},"network":"xhttp","security":"tls","tlsSettings":{"serverName":"${cfhostt}","allowInsecure":false,"alpn":["h2"],"fingerprint":"firefox"},"xhttpSettings":{"host":"${cfhostt}","path":"${path}","mode":"auto","extra":{"xPaddingObfsMode":true,"xPaddingKey":"x_padding","xPaddingHeader":"Referer","xPaddingPlacement":"queryInHeader","xPaddingMethod":"tokenish","xmux":{"maxConcurrency":"16-32","cMaxReuseTimes":0,"hMaxReusableSecs":"1800-3000","hKeepAlivePeriod":0}}}}}#${addressid}`;
 						vlessLinks.push(vlessLink);
 						
 						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
@@ -567,6 +572,12 @@ export default {
 				let hostbook = `${socks5s[2].socks5}`;
 				///ipv4或ipv6域名识别
 				const addressRegex = /^((?:\d{1,3}\.){3}\d{1,3}|\[([\da-f:]+)\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}):(\d+)#(.*)$/i;
+				
+				const cfaddressapi = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cfaddressapi') : null;
+				const cfapi = cfaddressapi.split('\n');
+				const cfmatch = cfapi[0].trim().match(addressRegex);
+				const [, cfipv4OrDomain, cfipv6, cfport, cfname] = cfmatch;
+				const cfipOrDomain = cfipv6 ? `[${cfipv6}]` : cfipv4OrDomain;
 
 				const cftaddressapi = env.SUB_BUCKET ? await env.SUB_BUCKET.get('cftaddressapi') : null;
 				// const cfsocks5address = env.SUB_BUCKET ? await env.SUB_BUCKET.get('socks5') : null;
@@ -591,7 +602,7 @@ export default {
 						// 	//console.log(path);
 						// }
 						path = encodeURIComponent(path);
-						const vlessLink = `vless://${uuid}@freeyx.cloudflare88.eu.org:443?encryption=${encryption}&security=tls&sni=${hostbook}&fp=chrome&alpn=h2&insecure=0&allowInsecure=0&ech=gitlab.io+https://223.5.5.5/dns-query&type=xhttp&host=${hostbook}&path=${path}&mode=auto&extra={"xPaddingObfsMode":true,"xPaddingKey":"x_padding","xPaddingHeader":"Referer","xPaddingPlacement":"queryInHeader","xPaddingMethod":"tokenish","xmux":{"maxConcurrency":"16-32","cMaxReuseTimes":0,"hMaxReusableSecs":"1800-3000","hKeepAlivePeriod":0},"downloadSettings":{"address":"${ipOrDomain}","port":${port},"network":"xhttp","security":"tls","tlsSettings":{"serverName":"${cfhostt}","allowInsecure":false,"alpn":["h2"],"fingerprint":"firefox"},"xhttpSettings":{"host":"${cfhostt}","path":"${path}","mode":"auto","extra":{"xPaddingObfsMode":true,"xPaddingKey":"x_padding","xPaddingHeader":"Referer","xPaddingPlacement":"queryInHeader","xPaddingMethod":"tokenish","xmux":{"maxConcurrency":"16-32","cMaxReuseTimes":0,"hMaxReusableSecs":"1800-3000","hKeepAlivePeriod":0}}}}}#${addressid}`;
+						const vlessLink = `vless://${uuid}@${cfipOrDomain}:${cfport}?encryption=${encryption}&security=tls&sni=${hostbook}&fp=chrome&alpn=h2&insecure=0&allowInsecure=0&ech=gitlab.io+https://223.5.5.5/dns-query&type=xhttp&host=${hostbook}&path=${path}&mode=auto&extra={"xPaddingObfsMode":true,"xPaddingKey":"x_padding","xPaddingHeader":"Referer","xPaddingPlacement":"queryInHeader","xPaddingMethod":"tokenish","xmux":{"maxConcurrency":"16-32","cMaxReuseTimes":0,"hMaxReusableSecs":"1800-3000","hKeepAlivePeriod":0},"downloadSettings":{"address":"${ipOrDomain}","port":${port},"network":"xhttp","security":"tls","tlsSettings":{"serverName":"${cfhostt}","allowInsecure":false,"alpn":["h2"],"fingerprint":"firefox"},"xhttpSettings":{"host":"${cfhostt}","path":"${path}","mode":"auto","extra":{"xPaddingObfsMode":true,"xPaddingKey":"x_padding","xPaddingHeader":"Referer","xPaddingPlacement":"queryInHeader","xPaddingMethod":"tokenish","xmux":{"maxConcurrency":"16-32","cMaxReuseTimes":0,"hMaxReusableSecs":"1800-3000","hKeepAlivePeriod":0}}}}}#${addressid}`;
 						vlessLinks.push(vlessLink);
 						
 						console.log(`地址：${ipOrDomain}，端口：${port}，名称：${addressid}`);
